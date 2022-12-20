@@ -1,0 +1,7 @@
+library(GGally)
+library(plotly)
+
+ppg2008$cluster <- as.factor(km.res$cluster)
+
+p <- ggparcoord(data = ppg2008, columns = c(2:21), groupColumn = "cluster", scale = "std") + labs(x = "characteristics", y = "value (in standard-deviation units)", title = "Clustering")
+ggplotly(p)
