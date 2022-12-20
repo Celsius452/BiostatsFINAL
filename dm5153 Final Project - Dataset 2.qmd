@@ -1,0 +1,514 @@
+---
+title: "Final Project - Dataset 2"
+author: "dm5153"
+format: html
+editor: visual
+---
+
+# Final Project
+
+dm5153
+
+## Project 2 - Handwriting Data
+
+### **Question 1.**
+
+**Use PCA to reduce dimensions. How many components do you need to keep to reproduce the digits reasonably well? what is your final matrix?**
+
+To capture \~94% of the variance, 75 PCs is enough, and based on plots of the cumulative variance, the elbow at which diminishing returns for including additional PCs starts about here. The drawn images are recognizable at this level, and even at lower thresholds around 20\~30 PCs the images can be visually interpreted. However, the background is not correctly reflected as completely white, and the label assignments are not correct even at 75 PCs or higher, despite cumulative variance totaling \~99%. To reach the highest level of accuracy at which the background and labels are correct, 576 PCs are needed. This amount is still 75% of the original number of components, which isn't an excellent reduction of dimensions. Excluding the labels could potentially improve the dimensionality reduction, though they are a single column with fairly low variance.
+
+```{r}
+#import data, libraries, and set working directory
+current_path = rstudioapi::getActiveDocumentContext()$path 
+setwd(dirname(current_path ))
+#print( getwd() )
+
+library(readxl)
+library(png)
+train <- read.csv("train.csv")
+```
+
+```{r}
+#function to draw the digit
+draw_digit<-function(data,row){
+  #import the relevant libraries
+  library(ggplot2)
+  library(reshape2)
+  
+  sqdim<-sqrt(ncol(data))
+  #intialize the matrix with the first 28 pixels
+  pixel_grid<-data[row,2:(sqdim+1)]
+  #rename the columns
+  colnames(pixel_grid) <- paste("Col", 1:sqdim)
+  
+ 
+  #put every 28 entries into a new row, starting at second row
+  for(x in 1:(sqdim-1)){
+    #define first pixel in the row
+    start<-x*sqdim+2
+    #define last pixel in the row
+    end<-start+sqdim-1
+    #hold the data from those pixels temporarily
+    temp_row<-data[row,start:end]
+    #make the column names match the full matrix
+    colnames(temp_row) <- paste("Col", 1:sqdim)
+    #add the temp row to the full matrix
+    pixel_grid<-rbind(pixel_grid,temp_row)
+  }
+  #flip the matrix
+  pixel_grid<-pixel_grid[nrow(pixel_grid):1,]
+  #name the rows
+  rownames(pixel_grid) <- paste("Row", 1:sqdim)
+  #melt the data so ggplot can interpret it
+  #also transpose at this point
+  m<-melt(as.matrix(t(pixel_grid)))
+  #give column names to the melted data
+  colnames(m) <- c("x", "y", "value")
+  #define the theme for the heatmap - remove axis etc
+  theme<-theme(legend.position="none",axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank(),axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank())
+  #plot the data as a greyscale heatmap
+  ggplot(m, aes(x=x,y=y,fill=value))+scale_fill_gradient(limits = c(min(m$value), max(m$value)), low = 'white', high = 'black')+geom_tile()+theme
+}
+```
+
+```{r}
+#define a row for use as tester
+testrow<-100
+```
+
+```{r}
+#call the function on a row of your choice for reference image
+draw_digit(train, testrow)
+```
+
+```{r}
+#run PCA on the full dataset
+full_pca<-prcomp(train, center=FALSE)
+```
+
+```{r}
+#run PCA on a subset of the data
+train_pca_sub<-prcomp(train[1:1000,], center=FALSE)
+```
+
+```{r}
+#view the plot of PCs versus variance explained
+plot(cumsum(train_pca_sub$sdev^2/sum(train_pca_sub$sdev^2)))
+#plot(train_pca_sub)
+#summary(train_pca_sub)
+```
+
+```{r}
+#find the number of PCs needed for all the labels to return correctly
+for(x in 1:ncol(train)){
+   pc.use<-x
+   train_trunc <- data.frame(round(train_pca_sub$x[,1:pc.use] %*% t(train_pca_sub$rotation[,1:pc.use]),0))
+   if(all.equal(train_trunc$label,train$label[1:1000])==TRUE){
+     print("Number of PCs for accurate labels:",pc.use)
+     break
+   }
+   
+}
+```
+
+```{r}
+pc.use <- 576 # number of PCs needed to correctly assign labels and make background white
+train_trunc <- data.frame(round(train_pca_sub$x[,1:pc.use] %*% t(train_pca_sub$rotation[,1:pc.use]),0))
+draw_digit(train_trunc,testrow)
+
+```
+
+```{r}
+train_pca_low<-prcomp(train[1:1000,], center=FALSE, rank. = 75)
+test<-data.frame(train_pca_low$x[testrow,] %*% t(train_pca_low$rotation))
+draw_digit(test,1)
+```
+
+### Question 2.
+
+**Draw a tree of the pixels, and see if you can explain the results based on geometry of the pixels (how far apart are they in the 2-d space). Try to Explain the PCA results in light of this.**
+
+By creating the dendrogram, we can see that the pixels with little to no data in them (mostly the edges of the images) cluster together and make up about 25% of the data. This is consistent with the above finding that 75% of the PCs were required to recreate the images.
+
+```{r, fig.align="center", echo = FALSE,fig.width = 1,fig.height=15}
+#install.packages("dendextend")
+library(ggplot2)
+library(ggdendro)
+library(dendextend)
+dend <- train[1:1000,2:785] %>% t %>% dist %>%  hclust %>% as.dendrogram %>%  set("labels_cex", 0.25) %>% set("branches_lwd",0.1) 
+ggd1 <- as.ggdend(dend)
+
+## Resize width and height plotting area
+#label(ggd1)
+ggplot(ggd1,horiz=TRUE)
+
+```
+
+### Question 3.
+
+**Can you use some of the tools you have learnt to build a classifier,so if you get a new set of pixels you can predict what is in the picture. This is a the start of a real project, but you don't have all the tools (such as neural networks) which might be more suited for this task. Split your dataset into two (a training set and a test set), build your classifier and figure out how well it does with the test data in predicting the digits. Define the sensitivity and specificity of your classifier. How well does it recognize your own handwriting? (make sure your handwriting is not in the training set)**
+
+```{r}
+#split data into 70% test and 30% train
+split1<- sample(c(rep(0, 0.7 * nrow(train)), rep(1, 0.3 * nrow(train))))
+hw_train<-train[split1 == 0,]
+hw_test<-train[split1 == 1,]
+```
+
+This will be be addressed using three different levels of algorithmic complexity.
+
+3.a. Machine learning algorithms/neural networks are the obvious choice for this task, but first we will try to classify by simply using the average for each digit and correlating against that. Using this method is about 80% accurate. When comparing to the handwriting samples I created, it was limited by the fact that there was only a single comparison, between the average and the sample for each digit. It was able to identify five of the digits correctly.
+
+3.b. The results of the correlative approach seemed insufficient, so using a machine learning model with PCA was the next step. By reducing dimensions and using LDA, we hope to classify each digit using a smaller number of the PC values instead of all 784 pixel columns. However, the performance of this model is poor despite various attempts to optimize, including using up to 500 PCs. The specificity and recall (the term sensitivity only applies to binary classification) were both far below acceptable standards, approximately between 0 and 0.2 depending on the digit being evaluated.
+
+3.c. The PCA model was disappointing as well. Thus, a more proper machine learning algorithm seems to be required. We next evaluate a random forest model. This model uses much less time and lines of code, and has an accuracy of 95% when applied to the test set. However, it is completely unable to identify any of the experimental handwritten digit samples. When applied to the averages for each digit, it can correctly identify 4 out of the 10. The failure to identify the handwriting samples may be due to the scale of the images in both position and intensity - the amount of whitespace outside the writing is not exactly the same, and the intensity of the black color is less in the samples. It may perform better if each image in both sets had any row or column in the 28x28 image with a maximum value below a certain threshold removed, and with the color normalized so that the darkest black part is always equal to the maximum.
+
+As a final observation, the basic correlative approach performed surprisingly well compared to more advanced algorithmic techniques.
+
+#### 3.a. Correlation Based Classification
+
+```{r}
+#create digit averages from the training set
+
+#create empty dataframe for the averages
+digit_averages<-train[FALSE,]
+#loop to get the averages for each digit 0-9
+for(x in 0:9){
+  #subset the data for the digit 
+  digit_subset<- hw_train[which(hw_train[,1]==x),]
+  #average the columns
+  digit_subset<-colMeans(digit_subset)
+  #add it to the dataset of averages
+  digit_averages<-rbind(digit_averages,digit_subset)
+}
+#rename the rows to the digit they represent, otherwise the labels start at 1 instead of 0
+row.names(digit_averages)<-0:9
+colnames(digit_averages)<-colnames(train)
+#call the function on the average data for the digit of your choice
+```
+
+```{r}
+#sample a row from the test set
+sample<-sample(1:nrow(hw_test),1)
+#store the correlation and digit with the highest correlation
+highest_cor<-0
+digit<-as.integer()
+#compare the correlation of each average digit to the test
+for(x in 1:10){
+  test<-as.numeric(hw_test[sample,2:785])
+  avg<-as.numeric(digit_averages[x,2:785])
+  test_cor<-cor(test, avg)
+  if(test_cor>highest_cor){
+    highest_cor<-test_cor
+    digit<-digit_averages[x,"label"]
+  }
+}
+#print the guess, correct answer, and correlation
+cat("Guess:",digit,"\n")
+cat("Actual:",hw_test[sample,"label"],"\n")
+cat("Correlation:",highest_cor,"\n")
+```
+
+```{r}
+#function to do the above, returns true or false and the test information
+test_classifier<-function(test_data,digit_averages){
+  sample<-sample(1:nrow(test_data),1)
+  highest_cor<-0
+  digit<-as.integer()
+  for(x in 1:10){
+    test<-as.numeric(test_data[sample,2:785])
+    avg<-as.numeric(digit_averages[x,2:785])
+    test_cor<-cor(test, avg)
+    if(test_cor>highest_cor){
+      highest_cor<-test_cor
+      digit<-digit_averages[x,"label"]
+    }
+  }
+  result<-c(digit,test_data[sample,"label"],digit==test_data[sample,"label"],highest_cor)
+  return(result)
+}
+```
+
+```{r}
+#test the function
+test_classifier(hw_test,digit_averages)
+```
+
+```{r}
+#test accuracy of the method
+count<-0
+total<-100
+for(x in 1:total){
+  result<-test_classifier(hw_test,digit_averages)
+  if(result[3]){
+    count<-count+1
+    #cat(count)
+  }
+}
+success_percent<-count/total
+cat(success_percent*100,"% Correct")
+```
+
+```{r}
+## average over a small square (fac x fac) 
+ave_by_fac <- function(i1,fac,ii,jj){
+  ave=0;
+  cnt=0;
+  for(i in c(1:fac)){
+    for(j in c(1:fac)){
+      cnt = cnt +1;
+      x = (ii-1)*fac+i;
+      y = (jj-1)*fac+j;
+      ##	 	 cat("i,j,ii,jj,x,y=",i,j,ii,jj,x,y,"\n");
+      ave = ave+	 i1[x,y];
+    }}
+  ave = ave/cnt;
+  return(ave);
+} 
+
+## function I wrote to scale down a square image to a 28 x 28 image
+## uses the averaging function above
+scale_down_image <- function(img_in) {
+  ## fac is the factor by which you have to scale the image to become a
+  ## 28 x 28 square
+  fac <- as.integer(dim(img_in)[1]/28); 
+  im_out <- matrix(0,nrow=28,ncol=28);
+  for(i in c(1:28)){
+    for(j in c(1:28)){
+      im_out[i,j] = ave_by_fac(img_in,fac,i,j);
+    }}
+  return(im_out);
+} 
+```
+
+```{r}
+#Get data
+library(png)
+library(vctrs)
+library(ggplot2)
+library(reshape2)
+
+
+
+
+#function to take png image and convert it to same format as train.csv data
+print_HW_digit<-function(img, label){
+    
+  #apply image scaling function
+  img_scaled<-scale_down_image(img[,,2])
+  
+  #rescale values in the data to match given data, 0=white, 255=black
+  img_scaled<-abs(img_scaled-1)
+  img_scaled<-img_scaled-min(img_scaled)
+  img_scaled<-img_scaled*255
+  img_scaled<-round(img_scaled,0)
+  #transpose data into correct orientation
+  img_scaled<-t(img_scaled)
+  
+  #create the label as a dataframe
+  label<-data.frame(label)
+  
+  #melt the image data so it is in long format
+  img_m<-melt(img_scaled)
+  #select only the values, excluding the x y coordinates
+  img_m<-img_m$value
+  #convert the linearized data into a data frame and transpose it so it is a row not a column
+  img_lin<-data.frame(img_m)
+  img_lin<-t(img_lin)
+  #put the label in the first column
+  img_lab<-cbind(label, img_lin)
+  #label the columns and the row
+  colnames(img_lab)<-colnames(train)
+  rownames(img_lab)<-label
+  #return the transformed data
+  return(img_lab)
+}
+```
+
+```{r}
+#create empty dataframe to store results
+HW_digits<-train[FALSE,]
+#call the function for each digit and store the results
+image<-print_HW_digit(readPNG("zero.png"),"0")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("one.png"),"1")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("two.png"),"2")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("three.png"),"3")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("four.png"),"4")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("five.png"),"5")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("six.png"),"6")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("seven.png"),"7")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("eight.png"),"8")
+HW_digits<-rbind(HW_digits,image)
+image<-print_HW_digit(readPNG("nine.png"),"9")
+HW_digits<-rbind(HW_digits,image)
+```
+
+```{r}
+#test output of function with handwriting data
+test_classifier(HW_digits,digit_averages)
+```
+
+```{r}
+#test accuracy of method on handwriting data
+digit_accuracy<-data.frame(matrix(ncol = 4, nrow = 10))
+digit_names <- c(0:9)
+rownames(digit_accuracy) <- digit_names
+colnames(digit_accuracy) <-c("Correct Correlation", "Highest Correlation","Correct","Total")
+count<-0
+total<-100
+digit_accuracy[,]<-0
+for(x in 1:total){
+  result<-test_classifier(HW_digits,digit_averages)
+  y<-result[2]
+  digit_count<-digit_accuracy[y,4]
+  digit_accuracy[y,4]<-digit_count+1
+  if(result[3]){
+    count<-count+1
+    digit_accuracy[y,3]<-digit_accuracy[y,3]+1
+    digit_accuracy[y,1]<-result[4]
+  }
+  if(result[4]>digit_accuracy[y,2]){
+    digit_accuracy[y,2]<-result[4]
+  }
+}
+success_percent<-count/total
+cat(success_percent*100,"% Correct")
+digit_accuracy
+```
+
+#### 3.b. PCA model
+
+```{r}
+#PCA model
+
+#for this method we will perform the PCA dimensionality reduction on the testing and training data, excluding the labels
+library(MASS)
+train_pca<-prcomp(hw_train[2:785], center=FALSE)
+test_pca<-prcomp(hw_test[2:785], center=FALSE)
+```
+
+```{r}
+#once reduced to principal components, the labels are added back in
+train_pca_df<-data.frame(as.numeric(hw_train$label),cbind(train_pca$x))
+colnames(train_pca_df)[1]<-"label"
+
+test_pca_df<-data.frame(as.numeric(hw_test$label),cbind(test_pca$x))
+colnames(test_pca_df)[1]<-"label"
+
+#the model includes up to PC10
+pca_model<-lda(label~PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10, data=train_pca_df)
+```
+
+```{r}
+#use the model to predict the values in the test set
+hw_pca_predict<-predict(pca_model, newdata=test_pca_df)
+```
+
+```{r}
+#compare the counts of each number predicted
+summary(hw_pca_predict$class)
+table(hw_test$label)
+```
+
+```{r}
+#count how many the model got right
+comp<-hw_pca_predict$class==hw_test$label
+table(comp)
+```
+
+```{r}
+# Evaluate the model by performance metrics
+library(mltest)
+model_eval <- ml_test(hw_pca_predict$class, hw_test$label)
+print(model_eval$balanced.accuracy)
+model_eval$precision
+model_eval$recall
+```
+
+```{r}
+#repeat this process for the handwritten digit samples
+HW_digit_pca<-prcomp(HW_digits[,2:785], center = FALSE)
+HW_digit_pca_df<-data.frame(cbind(HW_digit_pca$x[,1:10]),as.numeric(HW_digits$label))
+colnames(HW_digit_pca_df)[11]<-"label"
+
+hw_digit_pca_predict<-predict(pca_model, newdata=HW_digit_pca_df)
+digit_model_eval<-ml_test(hw_digit_pca_predict$class,HW_digits$label, output.as.table = TRUE)
+```
+
+#### 3.c. Random Forest model
+
+```{r}
+#random forest method
+#set the parameters for the random forest model
+library(randomForest)
+numTrees <- 25
+rf_labels<-as.factor(hw_train$label)
+rf_test<-hw_test[,-1]
+rf_train<-hw_train[,-1]
+#create the model, testing it on the test data
+rf <- randomForest(rf_train, rf_labels, xtest=rf_test, 
+                   ntree=numTrees)
+```
+
+```{r}
+#count how many the model got right by comparing the predictions to the labels
+comp<-data.frame(rf$test$predicted,hw_test$label,rf$test$predicted==hw_test$label)
+colnames(comp)<-c("Predicted","Actual","Accuracy")
+#calculate and report the performance metrics and summary
+rf_comp<-table(comp$Accuracy)
+rf_accuracy<-rf_comp[2]/(rf_comp[1]+rf_comp[2])*100
+print(head(as.matrix(comp),20))
+print(rf_comp)
+cat("\nRandom Forest accuracy:",rf_accuracy[[1]],"%")
+```
+
+```{r}
+#applying the RF classifier to the handwritten data
+rf2<- randomForest(rf_train, rf_labels, xtest=HW_digits[-1], 
+                   ntree=numTrees)
+```
+
+```{r}
+#count how many the model got right by comparing the predictions to the labels
+comp2<-data.frame(rf2$test$predicted,rf2$test$predicted==HW_digits$label, row.names = HW_digits$label)
+colnames(comp2)<-c("Predicted","Accuracy")
+#calculate and report the performance metrics and summary
+rf_comp2<-table(comp2$Accuracy)
+rf_accuracy2<-rf_comp2[2]/(rf_comp2[1]+rf_comp2[2])*100
+print(as.matrix(comp2))
+print(rf_comp2)
+cat("\nRandom Forest accuracy:",rf_accuracy2[[1]],"%")
+```
+
+### Question 4.
+
+**You can try simple things like take average of all data for each number and then take a "dot" product with your test set, and identify the pixels. This might work, maybe for some digits, and not others.**
+
+Here we will see which of the digit averages is best classified by the Random Forest model. This model is only about to correctly identify 4 of the 10 digits.
+
+```{r}
+#applying the RF classifier to the handwritten data
+rf3<- randomForest(rf_train, rf_labels, xtest=digit_averages[-1], 
+                   ntree=numTrees)
+```
+
+```{r}
+#count how many the model got right by comparing the predictions to the labels
+comp3<-data.frame(rf3$test$predicted,rf3$test$predicted==HW_digits$label,row.names = HW_digits$label)
+colnames(comp3)<-c("Predicted","Accuracy")
+
+#calculate and report the performance metrics and summary
+rf_comp3<-table(comp3$Accuracy)
+rf_accuracy3<-rf_comp3[2]/(rf_comp3[1]+rf_comp3[2])*100
+print(as.matrix(comp3))
+print(rf_comp3)
+cat("\nRandom Forest accuracy:",rf_accuracy3[1],"%")
+```
