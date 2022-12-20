@@ -1,0 +1,11 @@
+#use elbow method to decide on k for k-means
+library(cluster)
+library(factoextra)
+
+#create plot of number of clusters vs total within sum of squares
+fviz_nbclust(df, kmeans, method = "wss")
+
+km.res<-kmeans(df,8)
+dd <- cbind(df, cluster = km.res$cluster)
+
+fviz_cluster(km.res,df,labelsize = 8)
