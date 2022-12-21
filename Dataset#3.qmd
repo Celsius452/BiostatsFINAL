@@ -1,0 +1,253 @@
+---
+title: "Final Project-Dataset #3"
+author: mp6092 (Mudra Patel)
+format: html
+editor: visual
+---
+
+## Final Project-Dataset #3_Mudra Patel
+
+**1) Build hierarchical trees based on the columns and for the rows (exclude rows that are "low" expression)**
+
+```{r}
+# Import data from featureCounts
+countdata <- read.table("Mnemiopsis_count_data.csv", header=TRUE, row.names=1,sep=",")
+coldata <- read.table("Mnemiopsis_col_data.csv", header=TRUE, row.names=1,sep=",")
+```
+
+```{r}
+## make a matrix of only highly expressed genes
+data_subset <- as.matrix(countdata[rowSums(countdata)>100000,])
+head(data_subset)
+```
+
+```{r}
+## distance matrix by converting pearson correlation to a distance for rows
+dm <- as.dist((1-cor(t(data_subset),method=c("pearson")))/2)
+my_hclust_gene <- hclust(dm, method = "complete")
+library(dendextend)
+par(mar=c(5,5,5,12))
+nPar <- list(lab.cex = 0.6, pch = c(NA, 19),cex = 0.7, col = "blue")
+ePar = list(col = 2:3, lwd = 2:1)
+plot(as.dendrogram(my_hclust_gene),nodePar=nPar,
+edgePar=ePar,horiz=TRUE)
+```
+
+```{r}
+## distance matrix by converting pearson correlation to a distance for columns
+dmt <- as.dist((1- cor(data_subset,method=c("pearson")))/2)
+my_hclust_gene_t <- hclust(dmt, method = "complete")
+#library(dendextend)
+par(mar=c(5,5,5,12))
+nPar <- list(lab.cex = 0.6, pch = c(NA, 19),cex = 0.7, col = "blue")
+ePar = list(col = 2:3, lwd = 2:1)
+plot(as.dendrogram(my_hclust_gene_t),nodePar=nPar,
+edgePar=ePar,horiz=TRUE)
+```
+
+**2) Draw a heat map of the expression data**
+
+```{r}
+## make a matrix of only highly expressed genes
+data_sample <- as.matrix(countdata[rowSums(countdata)>200000,])
+data_sample
+library(pheatmap)
+## function to scale values in a list
+cal_z_score <- function(x){
+(x - mean(x)) / sd(x)
+}
+##scale each row, to create normalized data
+data_sample_norm <- t(apply(data_sample, 1,cal_z_score))
+pheatmap(data_sample_norm)
+```
+
+**3) Use DESeq2 to analyse this data**
+
+```{r}
+#install.packages('calibrate')
+#install.packages('DESeq2')
+#install.packages('RColorBrewer')
+#install.packages('gplots')
+#install.packages('genefilter')
+library(calibrate)
+library(DESeq2)
+library(RColorBrewer)
+library(gplots)
+library(genefilter)
+```
+
+```{r}
+# Convert to matrix
+countdata <- as.matrix(countdata)
+head(countdata)
+#coldata <- as.matrix(coldata)
+head(coldata)
+
+# Analysis with DESeq2 ----------------------------------------------------
+# Create a coldata frame and instantiate the DESeqDataSet. See ?DESeqDataSetFromMatrix
+dds <- DESeqDataSetFromMatrix(countData=countdata, colData=coldata, design=~condition)
+```
+
+```{r}
+# Run the DESeq pipeline
+dds <- DESeq(dds)
+```
+
+```{r}
+#dispersion plot
+png("qc-dispersions.png", 1000, 1000, pointsize=20)
+plotDispEsts(dds, main="Dispersion plot")
+dev.off()
+```
+
+```{r}
+#Regularized log transformation for clustering/heatmaps, etc
+rld <- rlogTransformation(dds)
+head(assay(rld))
+hist(assay(rld))
+```
+
+```{r}
+#Colors for plots below
+(mycols <- brewer.pal(8, "Dark2")[1:length(unique(coldata$condition))])
+```
+
+```{r}
+# DESeq2::plotPCA
+pca <- function (rld, intgroup = "condition", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
+  require(genefilter)
+  require(calibrate)
+  require(RColorBrewer)
+  rv = rowVars(assay(rld))
+  select = order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
+  pca = prcomp(t(assay(rld)[select, ]))
+  fac = factor(apply(as.data.frame(colData(rld)[, intgroup, drop = FALSE]), 1, paste, collapse = " : "))
+  if (is.null(colors)) {
+    if (nlevels(fac) >= 3) {
+      colors = brewer.pal(nlevels(fac), "Paired")
+    }   else {
+      colors = c("black", "red")
+    }
+  }
+  pc1var <- round(summary(pca)$importance[2,1]*100, digits=1)
+  pc2var <- round(summary(pca)$importance[2,2]*100, digits=1)
+  pc1lab <- paste0("PC1 (",as.character(pc1var),"%)")
+  pc2lab <- paste0("PC1 (",as.character(pc2var),"%)")
+  plot(PC2~PC1, data=as.data.frame(pca$x), bg=colors[fac], pch=21, xlab=pc1lab, ylab=pc2lab, main=main, ...)
+  with(as.data.frame(pca$x), textxy(PC1, PC2, labs=rownames(as.data.frame(pca$x)), cex=textcx))
+  legend(legendpos, legend=levels(fac), col=colors, pch=20)
+}
+png("qc-pca.png", 1000, 1000, pointsize=20)
+pca(rld, colors=mycols, intgroup="condition", xlim=c(-75, 35))
+dev.off()
+
+```
+
+```{r}
+#differential expression results
+res <- results(dds)
+table(res$padj<0.05)
+#Ordered by adjusted p-value
+res <- res[order(res$padj), ]
+#Merging with normalized count data
+resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE)), by="row.names", sort=FALSE)
+names(resdata)[1] <- "Gene"
+head(resdata)
+#Exporting results into a csv file
+write.csv(resdata, file="diffexpr-results.csv")
+```
+
+```{r}
+#Examine plot of p-values
+hist(res$pvalue, breaks=50, col="grey")
+
+```
+
+```{r}
+#DESeq2::plotMA
+maplot <- function (res, thresh=0.05, labelsig=TRUE, textcx=1, ...) {
+  with(res, plot(baseMean, log2FoldChange, pch=20, cex=.5, log="x", ...))
+  with(subset(res, padj<thresh), points(baseMean, log2FoldChange, col="red", pch=20, cex=1.5))
+  if (labelsig) {
+    require(calibrate)
+    with(subset(res, padj<thresh), textxy(baseMean, log2FoldChange, labs=Gene, cex=textcx, col=2))
+  }
+}
+png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
+maplot(resdata, main="MA Plot")
+dev.off()
+```
+
+```{r}
+
+## Volcano plot with genes labeled significant
+volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", legendpos="bottomright", labelsig=TRUE, textcx=1, ...) {
+  with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main=main, ...))
+  with(subset(res, padj<sigthresh ), points(log2FoldChange, -log10(pvalue), pch=20, col="red", ...))
+  with(subset(res, abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="orange", ...))
+  with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="green", ...))
+  if (labelsig) {
+    require(calibrate)
+    with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), textxy(log2FoldChange, -log10(pvalue), labs=Gene, cex=textcx, ...))
+  }
+  legend(legendpos, xjust=1, yjust=1, legend=c(paste("FDR<",sigthresh,sep=""), paste("|LogFC|>",lfcthresh,sep=""), "both"), pch=20, col=c("red","orange","green"))
+}
+
+png("diffexpr-volcanoplot.png", 1200, 1000, pointsize=20)
+volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
+dev.off()
+```
+
+**a) which are the most significantly changing genes in this dataset?**
+
+-   there are couple of column that we can look at from the "diffexpr-results.csv" file to indicate which genes are significantly changing. Looking at the *log2FoldChange* column a positive fold change value indicates an increase of expression, while a negative fold change indicates a decrease in expression. The table is organized by the adjusted p-value column which indicates whether the gene analysed is likely to be differentially expressed in that comparison.This applies to each gene individually, assuming that the gene was tested on its own without consideration that all other genes were also tested. 2129 genes are significant with an adjusted p-value \<0.05. What we noticed is that the FDR threshold on it\'s own doesn\'t appear to be reducing the number of significant genes. With large significant gene lists it can be hard to extract meaningful biological relevance. To help increase stringency, one can also **add a fold change threshold**.
+
+    ```{r}
+    ### Set thresholds
+    padj.cutoff <- 0.05
+    lfc.cutoff <- 0.58
+    ```
+
+-   From the deseq2 analysis we can assume that the most significantly changing genes are:-
+
+-   ![](images/paste-4F506A0B.png)
+
+-   ![](images/paste-92C79C51.png)
+
+-   ![](images/paste-81E1A0C5.png)
+
+-   ![](images/paste-E9BD69D8.png)
+
+-   ![](images/paste-63B5178E.png)
+
+-   ![](images/paste-0E4521B2.png)
+
+**b) which genes are most consistently highly expressed in these datasets they are the "house-keeping" genes?**
+
+![](images/Screen%20Shot%202022-12-21%20at%2011.24.07%20AM.png)
+
+**c) How consistent are these results with the analysis you did in the midterm project?**
+
+The data varies a bit from the midterm project however some data is pretty similar. For example, ML034332a was classified as a down regulated gene in the midterm proejct and based on the Deseq2 analysis (MA Plot) it is an outlier gene. Also when the gene were organized via expresion for column vs row basis in the midterm project it showed 'ML004510a' to be in the top 5 varied gene however this gene is also another example of an outlier.
+
+**d) What else can you say about the data in terms of consistency, and the results that you find from your analyses. The question is open-ended, think of this as your experiment, you need to write a paper based on this data so you have to figure out what kind of "story" you can tell based on this.**
+
+Principal Components Analysis (PCA) is a dimension reduction and visualization technique that is here used to project the multivariate data vector of each sample into a two-dimensional plot, such that the spatial arrangement of the points in the plot reflects the overall data (dis)similarity between the samples. The majority of variation between the samples can be summarized by the first principal component, which is shown on the x-axis. The second principal component summarizes the residual variation that isn\'t explained by PC1. PC2 is shown on the y-axis. The percentage of the global variation explained by each principal component is given in the axis labels. In a two-condition scenario (e.g. ABORAL vs ORAL), you might expect PC1 to separate the two experimental conditions, so for example, having all the controls on the left and all experimental samples on the right (or vice versa - the units and directionality isn\'t important). The secondary axis may separate other aspects of the design - cell line, time point, etc. Very often the experimental design is reflected in the PCA plot, and in this case, it is.
+
+![](qc-pca.png)
+
+The resaon behind fitting a curve to the data is that different genes will have different scales of biological variability, but, over all genes, there will be a distribution of reasonable estimates of dispersion. This curve is displayed as a red line in the figure below, which plots the estimate for the expected dispersion value for genes of a given expression strength. Each black dot is a gene with an associated mean expression level and maximum likelihood estimation (MLE) of the dispersion.. This plot is a great representation of examining data after deseq2 analysis. You expect your data to generally scatter around the curve, with the dispersion decreasing with increasing mean expression levels. If you see a cloud or different shapes, then you might want to explore your data more to see if you have contamination or outlier samples.
+
+![](qc-dispersions.png)
+
+An MA plot shows the average expression on the X-axis and the log fold change on the y-axis. This MA plot shows a high number of data points falling above the one threshold on the y-axis indicating a more significant number of genes being upregulated, while more below −1 would indicating high levels of downregulation in genes.
+
+![](diffexpr-maplot.png)
+
+A volcano plot shows the log fold change on the X-axis, and the −log10−log10 of the p-value on the Y-axis (the more significant the p-value, the larger the −log10−log10 of that value will be). Looking at the x axis we can see that all the genes on the right of the 0 (positive side) are all positively expressed where as the ones plotted on the left of 0 are negatively expressed.
+
+![](diffexpr-volcanoplot.png)
+
+**e) what is the most interesting pathway or gene that is responding in this study?**
+
+-   ML01051a seems to show all the properties for being an outlier however it was in the top 5 of high expressed genes.
