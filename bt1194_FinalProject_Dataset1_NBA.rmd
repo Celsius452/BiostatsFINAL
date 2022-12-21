@@ -1,0 +1,187 @@
+---
+title: "Stats.Final"
+author: "Brandon Thong"
+date: "2022-12-18"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+Project 1.
+
+This data is about basketball players from the year 2008 and is
+in the file ppg2008.csv. It has various statistics on players in the NBA.
+You might not know what each of the metrics means (I don't),
+but they are just different dimensions of data.  
+
+This is a visualization and data mining exercise. 
+
+What can you say about this dataset, use tools that you learned here.
+and make a report or a visual that highlights something interesting,
+maybe compare players, especially how they have performed since,
+based on the data in here. Many of these players have reached
+their peak recently and you will be able to find statistics about
+their performance in 2019. 
+
+Could you have predicted the successes and failures of some of the players, based
+on analyses of the data ?
+maybe you could be a talent scout for an NBA team ? 
+
+
+Think of it as your job, as a reporter for NY times, to make a single graphic
+that highlights something about this data. Explain the analysis that went
+into the graphic and present the code too. This should be done in a notebook so
+it is easy to evaluate. 
+
+
+
+```{r}
+#Load packages
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(scales)
+library(ComplexHeatmap)
+library(circlize)
+library(pheatmap)
+library(heatmaply)
+library(tinytex)
+```
+```{r}
+#Read in original 2008 data set
+nba08<-read.csv("E:/Stats.FINAL_PROJECT/ppg2008.csv",header=TRUE)
+nba08$Name<-with(nba08,reorder(Name,PTS))
+nba08.m<-melt(nba08)
+```
+```{r, fig.width=15,fig.height=10}
+nba08.m<-ddply(nba08.m, .(variable), transform, rescale=rescale(value))
+#Set the ggplot up to create the heatmap for the 2008-2009 NBA data
+p<-ggplot(nba08.m, aes(variable,Name))+geom_tile(aes(fill=rescale),colour="white")+scale_fill_gradient(low="white",high="steelblue")
+p
+```
+
+Now, a heat map will be generated for the 2018 data. 
+
+Data taken from an NBA statistics website; cleaned up to remove some columns that cannot be compared
+https://www.nbastuffer.com/2018-2019-nba-player-stats/
+
+```{r}
+#Read in 2018-19 data set
+nba18<-read.csv("E:/Stats.FINAL_PROJECT/2018_2019NBAPlayerStatsRegSeason.csv",header=TRUE, fileEncoding="UTF-8-BOM")
+
+#Remove duplciate names in this dataframe
+nba18<-nba18[!duplicated(nba18$NAME),]
+
+#Fix column1 so it becomes the row names
+nba18.1<-nba18[,-1]
+rownames(nba18.1)<-nba18[,1]
+
+#nba18.1$NAME<-with(nba18.1,reorder(NAME,PTS))
+#nba18.1.m<-melt(nba18.1)
+```
+
+
+
+
+
+```{r}
+#2018 data in same style as the 2008 data
+
+nba18sorted<-nba18[order(-nba18$PTS),]
+nba18.top50<-head(nba18sorted,50)
+nba18.melted<-melt(nba18.top50)
+```
+```{r, fig.width=15,fig.height=10}
+nba18.melted<-ddply(nba18.melted, .(variable),transform,rescale=rescale(value))
+ggplot(nba18.melted,aes(variable,NAME))+geom_tile(aes(fill=rescale),colour="white")+scale_fill_gradient(low="white",high="steel blue")
+```
+
+
+NOW WITH FULL DATASET, Just to take a look.
+
+```{r, fig.width=25,fig.height=90}
+#Now with all data
+nba18.allplayers.melted<-melt(nba18sorted)
+
+nba18.allplayers.melted<-ddply(nba18.allplayers.melted, .(variable),transform,rescale=rescale(value))
+
+ggplot(nba18.allplayers.melted,aes(variable,NAME))+geom_tile(aes(fill=rescale),colour="white")+scale_fill_gradient(low="white",high="steel blue")
+```
+
+
+
+
+Now Regenerate 08 heatmap WITHOUT Yao, who is a 3P% outlier.
+
+```{r}
+#Read in original 2008 data set with Yao Ming removed
+nba08noYao<-read.csv("E:/Stats.FINAL_PROJECT/ppg2008.noYao.csv",header=TRUE)
+nba08noYao$Name<-with(nba08noYao,reorder(Name,PTS))
+nba08noYao.m<-melt(nba08noYao)
+```
+
+```{r, fig.width=15,fig.height=10}
+nba08noYao.m<-ddply(nba08noYao.m, .(variable), transform, rescale=rescale(value))
+#Set the ggplot up to create the heatmap for the 2008-2009 NBA data without Yao Ming
+pnoYao<-ggplot(nba08noYao.m, aes(variable,Name))+geom_tile(aes(fill=rescale),colour="white")+scale_fill_gradient(low="white",high="steelblue")
+pnoYao
+```
+
+
+
+DISCUSSION:
+
+- note that for top 50 pts output players in the league:
+
+-- At first glance in the 2008 players, 3-point shooting seems to be much less prioritized, with the rest of the players having lower but mostly equal shooting percentages for this statistic. However, in the 2018 data, we see that while 3P% is at mostly consistent levels across players, they are grouped much higher (darker colors) compared to the older data. We can see the main excellent shooters in 2018, unsurprisingly Steph Curry, Klay Thompson, and Danilo Gallinari. HOWEVER, it should be noted that it may be difficult to glean information as effectively from the 2008 data, as Yao Ming apparently made 100% of his 3pt shots (virtually no attempts, as he was an extremely tall player, even for a center, which usually did not shoot at the time).
+- After further investigation, it seems the issue extends beyond just Yao Ming. It seems that many large players in the Center position have extremely high or low 3-point shooting percentages due to their very low attempt numbers. However, removing Yao as an outlier still improves visualization of 3-point shooting percentages for the rest of the 2008 data set.
+
+
+-- This is why the original 08 data was remapped with Yao Ming removed to better visualize the relative 3PP performance of the top players of the time. In the 08 dataset, we can see that amongst top players in the league, 3PP is at a similar high level across the board, with a few standout players. This would indicate that being a good shooter, especially at the 3-point line, was an important part of a primary scorer's game. This is further corroborated by many players also having a high free throw % (FTP). There are a few data points to specifically note, particularly the very dark blue and white spots on the heatmap. These extremely high and low 3PP stats reflect the playstyle of the most successful power forwards and centers of the league, that took few to no 3 point shots, causing that statline to show either extremely high or low percentages. These players include Pau Gasol and Yao Ming with extremely high percentages, and Shaquille O'neal, Tim Duncan, and Dwight Howard with extremely low percentages. These players typically found their scoring success with high-percentage shots inside of the 3-point line using their size and strength, which is supported by many of these players also having extremely high Field Goal Percentages (FGP). Furthermore, these players were successful due to other aspects of the game than scoring, indicated by many players with extremely low 3PP also having unusually high Rebounding and Block statistics. 
+
+-- We can also discuss certain players that display deeply shaded blocks on the heatmap, indicating their unusually high performance in certain areas of the game. One such player is Chris Paul, who is close to the top of the Name axis and has very dark blocks in the Assist and Steal categories. This indicates his role as a crafty and strong playmaker, finding success not just as a scorer by himself, but making plays happen on both sides of the court. Another notable player is Dwight Howard, who notably has virtually no value in the deep shooting categories. However, it is clear he found success in other ways, shown by his incredibly high value in all rebounding categories, as well as in blocking and free throw attempts. This indicates his success as a defensive player and with plays at the rim earning him many free throws from other players fouling him in the act of scoring. 
+-- Other players that stand out include Kevin Martin, who is appears to be a good shooter in general, but was the best in the league at shooting free throws. Another is Deron Williams, with assists at about the same level as Chris Paul, and Stephen Jackson, with the most turnovers in the league. Lastly, Corey Maggette has the most Personal Fouls called against him by far, which upon further investigation, reflects his ability/style to draw fouls while scoring and create points from his solid free throw shooting.
+
+2018
+
+- As for the 2018 data, we see less fewer clear patterns and players that easily stand out from the rest across the board. This may be an indicator that the way the game is played has shifted, with many players developing other aspects of their skill set especially as 3-point shooting has become more emphasized. 
+
+- While there are fewer clear stand-out players, we still do see come players excelling in certain areas. Firstly, we can see that James Harden leads the league in Points by a noticeably larger margin than what was seen in the 2008 data, with the shading in the PTS column dropping off much more sharply. This, coupled with his league leading free throw percentage (FTP) indicates his position as a top scorer in the league with the ability to gain many free throw attempts at the line from fouls drawn on his plays. 
+- Another notable player is Stephen Curry, with excellent free throw, field goal, and 3-point shooting, displaying his season-leading abilities as one of the best shooting guards the league has ever seen. 
+- On the other side, we can also see top inside scorers in Giannis Antetokounmpo, with leading stats in the 2P-shooting %, Field Goal %, and rebounding, displaying his dominance as the leading "big man" in the league.
+
+- Other notable individuals are as follows
+- Highest Percentage 3-point shooters : Buddy Hield, Bojan Bogdanovic, and Danilo Gallinari (who also appears to have the highest offensive rating in the league)
+- Highest Percentage Field Goal scorers: Giannis Antetokounmmpo, Stephen Curry, JaKarr Sampson, and John Collins
+- Best Free throw Shooters: Stephen Curry, Damian Lilliard, Danilo Galinari, and JJ Redick
+- Best Assister: Russell Westbrook
+- Best Stealers: Jimmy Butler (by far), and Paul George 
+- Best Blockers: Anthony Davis(by far), Giannis Antetokounmpo, Joel Embiid, and Karl-Anthony Towns
+- Best Rebounders: Joel Embiid, Giannis Antetokounmpo, and Karl-Anthony Towns
+- Most Turnovers: Trae Young
+
+
+
+- Players in both datasets:
+-- We do see certain players appear in both the 2008 and 2018 datasets, namely Kevin Durant, Lebron James, and LaMarcus Aldrige. Within the top 50 players from each dataset, these are the only apparent players that are still playing in the NBA 10 years later. After further investigation, all three of these player were drafted within a few years of the 2008 season and thus were very young when the data was collected. 
+-- When comparing players that appear in both data sets, it would appear that age can be a factor in predicting player success in that players who excelled at a high level early on in their career also tend to find success much later in their careers as well. However, it is difficult to predict player success off of the provided data since many top players in the league in 2008 are not present in 2018, as most were at the height of their careers in 2008 and retired by the time the 2018 season arrived. Exceptions to this are the players stated above. 
+
+
+
+-- Conclusions:
+- The most successful players in the league can most simply be identified by ranking players by how many points they made. However, this is not a complete picture, and players found this success in different specific aspects of the game. From looking at both 2008 and 2018 data, we can see that these players were able to find opportunities to have impact in their teams typically from either being excellent shooters, defenders(blocks and rebounds), playmakers, and/or insider scorers. Furthermore, we can see that typically, excelling in any particular category does seem to have a link to performing better in certain areas and worse in others, as plays tend to follow a particular playstyle based off of their speed, size, and ability to score, often at the cost of other areas of the game. 
+
+- For example, top shooters such as Stephen Curry, Buddy Hield, and Tobias Harris tend to lack in areas such as blocking or rebounding but find great success shooting the ball, whether at the free throw line or from the 3 line. On the other end, we can also see the "big men" of the league finding success with high defensive statistics such as blocks and rebounds, sometimes paired with high field goal percentages (especially in 2008), indicative of them usually preferring to score with high percentage shots inside of the 3-point line. 
+
+- We can also see which players found great success as playmakers, displayed by their high assist statistics that is usually linked with high turnovers. While at first glance having high turnovers may seem very negative, this is simply indicative of how much of their team's offense flows through these players, as they primarily decide where the ball moves as the play develops. Since these players handle the ball so often, it is sensible that even very successful assisters will have a high turnover percentage by virtue of handling the ball so often.  
+
+
+
+
+
+Dendrograms for the 2008 data without Yao Ming and the top 50 scoring players in 2018 can also be found below.
+```{r}
+heatmaply(nba08noYao)
+heatmaply(nba18.top50)
+```
