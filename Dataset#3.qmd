@@ -1,0 +1,199 @@
+---
+title: "Final Project-Dataset #3"
+author: mp6092 (Mudra Patel)
+format: html
+editor: visual
+---
+
+## Final Project-Dataset #3_Mudra Patel
+
+**1) Build hierarchical trees based on the columns and for the rows (exclude rows that are "low" expression)**
+
+```{r}
+# Import data from featureCounts
+countdata <- read.table("Mnemiopsis_count_data.csv", header=TRUE, row.names=1,sep=",")
+coldata <- read.table("Mnemiopsis_col_data.csv", header=TRUE, row.names=1,sep=",")
+```
+
+```{r}
+## make a matrix of only highly expressed genes
+data_subset <- as.matrix(countdata[rowSums(countdata)>100000,])
+head(data_subset)
+```
+
+```{r}
+## distance matrix by converting pearson correlation to a distance for rows
+dm <- as.dist((1-cor(t(data_subset),method=c("pearson")))/2)
+my_hclust_gene <- hclust(dm, method = "complete")
+library(dendextend)
+par(mar=c(5,5,5,12))
+nPar <- list(lab.cex = 0.6, pch = c(NA, 19),cex = 0.7, col = "blue")
+ePar = list(col = 2:3, lwd = 2:1)
+plot(as.dendrogram(my_hclust_gene),nodePar=nPar,
+edgePar=ePar,horiz=TRUE)
+```
+
+```{r}
+## distance matrix by converting pearson correlation to a distance for columns
+dmt <- as.dist((1- cor(data_subset,method=c("pearson")))/2)
+my_hclust_gene_t <- hclust(dmt, method = "complete")
+#library(dendextend)
+par(mar=c(5,5,5,12))
+nPar <- list(lab.cex = 0.6, pch = c(NA, 19),cex = 0.7, col = "blue")
+ePar = list(col = 2:3, lwd = 2:1)
+plot(as.dendrogram(my_hclust_gene_t),nodePar=nPar,
+edgePar=ePar,horiz=TRUE)
+```
+
+**2) Draw a heat map of the expression data**
+
+```{r}
+## make a matrix of only highly expressed genes
+data_sample <- as.matrix(countdata[rowSums(countdata)>200000,])
+data_sample
+library(pheatmap)
+## function to scale values in a list
+cal_z_score <- function(x){
+(x - mean(x)) / sd(x)
+}
+##scale each row, to create normalized data
+data_sample_norm <- t(apply(data_sample, 1,cal_z_score))
+pheatmap(data_sample_norm)
+```
+
+**3) Use DESeq2 to analyse this data**
+
+```{r}
+#install.packages('calibrate')
+#install.packages('DESeq2')
+#install.packages('RColorBrewer')
+#install.packages('gplots')
+#install.packages('genefilter')
+library(calibrate)
+library(DESeq2)
+library(RColorBrewer)
+library(gplots)
+library(genefilter)
+```
+
+```{r}
+# Convert to matrix
+countdata <- as.matrix(countdata)
+head(countdata)
+#coldata <- as.matrix(coldata)
+head(coldata)
+
+# Analysis with DESeq2 ----------------------------------------------------
+# Create a coldata frame and instantiate the DESeqDataSet. See ?DESeqDataSetFromMatrix
+dds <- DESeqDataSetFromMatrix(countData=countdata, colData=coldata, design=~condition)
+```
+
+```{r}
+# Run the DESeq pipeline
+dds <- DESeq(dds)
+```
+
+```{r}
+#dispersion plot
+png("qc-dispersions.png", 1000, 1000, pointsize=20)
+plotDispEsts(dds, main="Dispersion plot")
+dev.off()
+```
+
+```{r}
+#Regularized log transformation for clustering/heatmaps, etc
+rld <- rlogTransformation(dds)
+head(assay(rld))
+hist(assay(rld))
+```
+
+```{r}
+#Colors for plots below
+(mycols <- brewer.pal(8, "Dark2")[1:length(unique(coldata$condition))])
+```
+
+```{r}
+# DESeq2::plotPCA
+pca <- function (rld, intgroup = "condition", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
+  require(genefilter)
+  require(calibrate)
+  require(RColorBrewer)
+  rv = rowVars(assay(rld))
+  select = order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
+  pca = prcomp(t(assay(rld)[select, ]))
+  fac = factor(apply(as.data.frame(colData(rld)[, intgroup, drop = FALSE]), 1, paste, collapse = " : "))
+  if (is.null(colors)) {
+    if (nlevels(fac) >= 3) {
+      colors = brewer.pal(nlevels(fac), "Paired")
+    }   else {
+      colors = c("black", "red")
+    }
+  }
+  pc1var <- round(summary(pca)$importance[2,1]*100, digits=1)
+  pc2var <- round(summary(pca)$importance[2,2]*100, digits=1)
+  pc1lab <- paste0("PC1 (",as.character(pc1var),"%)")
+  pc2lab <- paste0("PC1 (",as.character(pc2var),"%)")
+  plot(PC2~PC1, data=as.data.frame(pca$x), bg=colors[fac], pch=21, xlab=pc1lab, ylab=pc2lab, main=main, ...)
+  with(as.data.frame(pca$x), textxy(PC1, PC2, labs=rownames(as.data.frame(pca$x)), cex=textcx))
+  legend(legendpos, legend=levels(fac), col=colors, pch=20)
+}
+png("qc-pca.png", 1000, 1000, pointsize=20)
+pca(rld, colors=mycols, intgroup="condition", xlim=c(-75, 35))
+dev.off()
+
+```
+
+```{r}
+#differential expression results
+res <- results(dds)
+table(res$padj<0.05)
+#Ordered by adjusted p-value
+res <- res[order(res$padj), ]
+#Merging with normalized count data
+resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE)), by="row.names", sort=FALSE)
+names(resdata)[1] <- "Gene"
+head(resdata)
+#Exporting results into a csv file
+write.csv(resdata, file="diffexpr-results.csv")
+```
+
+```{r}
+#Examine plot of p-values
+hist(res$pvalue, breaks=50, col="grey")
+
+```
+
+```{r}
+#DESeq2::plotMA
+maplot <- function (res, thresh=0.05, labelsig=TRUE, textcx=1, ...) {
+  with(res, plot(baseMean, log2FoldChange, pch=20, cex=.5, log="x", ...))
+  with(subset(res, padj<thresh), points(baseMean, log2FoldChange, col="red", pch=20, cex=1.5))
+  if (labelsig) {
+    require(calibrate)
+    with(subset(res, padj<thresh), textxy(baseMean, log2FoldChange, labs=Gene, cex=textcx, col=2))
+  }
+}
+png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
+maplot(resdata, main="MA Plot")
+dev.off()
+```
+
+```{r}
+
+## Volcano plot with genes labeled significant
+volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", legendpos="bottomright", labelsig=TRUE, textcx=1, ...) {
+  with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main=main, ...))
+  with(subset(res, padj<sigthresh ), points(log2FoldChange, -log10(pvalue), pch=20, col="red", ...))
+  with(subset(res, abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="orange", ...))
+  with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="green", ...))
+  if (labelsig) {
+    require(calibrate)
+    with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), textxy(log2FoldChange, -log10(pvalue), labs=Gene, cex=textcx, ...))
+  }
+  legend(legendpos, xjust=1, yjust=1, legend=c(paste("FDR<",sigthresh,sep=""), paste("|LogFC|>",lfcthresh,sep=""), "both"), pch=20, col=c("red","orange","green"))
+}
+
+png("diffexpr-volcanoplot.png", 1200, 1000, pointsize=20)
+volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
+dev.off()
+```
