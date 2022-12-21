@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dm5153">
+
+<title>Final Project - Dataset 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="dm5153 Final Project - Dataset 2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="dm5153 Final Project - Dataset 2_files/libs/quarto-html/quarto.js"></script>
+<script src="dm5153 Final Project - Dataset 2_files/libs/quarto-html/popper.min.js"></script>
+<script src="dm5153 Final Project - Dataset 2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="dm5153 Final Project - Dataset 2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="dm5153 Final Project - Dataset 2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="dm5153 Final Project - Dataset 2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="dm5153 Final Project - Dataset 2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="dm5153 Final Project - Dataset 2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="dm5153 Final Project - Dataset 2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Final Project - Dataset 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>dm5153 </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="final-project" class="level1">
+<h1>Final Project</h1>
+<p>dm5153</p>
+<section id="project-2---handwriting-data" class="level2">
+<h2 class="anchored" data-anchor-id="project-2---handwriting-data">Project 2 - Handwriting Data</h2>
+<section id="question-1." class="level3">
+<h3 class="anchored" data-anchor-id="question-1."><strong>Question 1.</strong></h3>
+<p><strong>Use PCA to reduce dimensions. How many components do you need to keep to reproduce the digits reasonably well? what is your final matrix?</strong></p>
+<p>To capture ~94% of the variance, 75 PCs is enough, and based on plots of the cumulative variance, the elbow at which diminishing returns for including additional PCs starts about here. The drawn images are recognizable at this level, and even at lower thresholds around 20~30 PCs the images can be visually interpreted. However, the background is not correctly reflected as completely white, and the label assignments are not correct even at 75 PCs or higher, despite cumulative variance totaling ~99%. To reach the highest level of accuracy at which the background and labels are correct, 567 PCs are needed. This amount is still 75% of the original number of components, which isn’t an excellent reduction of dimensions. Excluding the labels could potentially improve the dimensionality reduction, though they are a single column with fairly low variance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import data, libraries, and set working directory</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#current_path = rstudioapi::getActiveDocumentContext()$path </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd(dirname(current_path ))</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print( getwd() )</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"train.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#function to draw the digit</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>draw_digit<span class="ot">&lt;-</span><span class="cf">function</span>(data,row){</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#import the relevant libraries</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(reshape2)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  sqdim<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">ncol</span>(data))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#intialize the matrix with the first 28 pixels</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  pixel_grid<span class="ot">&lt;-</span>data[row,<span class="dv">2</span><span class="sc">:</span>(sqdim<span class="sc">+</span><span class="dv">1</span>)]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rename the columns</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(pixel_grid) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Col"</span>, <span class="dv">1</span><span class="sc">:</span>sqdim)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#put every 28 entries into a new row, starting at second row</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(sqdim<span class="dv">-1</span>)){</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#define first pixel in the row</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    start<span class="ot">&lt;-</span>x<span class="sc">*</span>sqdim<span class="sc">+</span><span class="dv">2</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#define last pixel in the row</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    end<span class="ot">&lt;-</span>start<span class="sc">+</span>sqdim<span class="dv">-1</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#hold the data from those pixels temporarily</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    temp_row<span class="ot">&lt;-</span>data[row,start<span class="sc">:</span>end]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#make the column names match the full matrix</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(temp_row) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Col"</span>, <span class="dv">1</span><span class="sc">:</span>sqdim)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#add the temp row to the full matrix</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    pixel_grid<span class="ot">&lt;-</span><span class="fu">rbind</span>(pixel_grid,temp_row)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">#flip the matrix</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  pixel_grid<span class="ot">&lt;-</span>pixel_grid[<span class="fu">nrow</span>(pixel_grid)<span class="sc">:</span><span class="dv">1</span>,]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">#name the rows</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(pixel_grid) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Row"</span>, <span class="dv">1</span><span class="sc">:</span>sqdim)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">#melt the data so ggplot can interpret it</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">#also transpose at this point</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  m<span class="ot">&lt;-</span><span class="fu">melt</span>(<span class="fu">as.matrix</span>(<span class="fu">t</span>(pixel_grid)))</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">#give column names to the melted data</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(m) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"value"</span>)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">#define the theme for the heatmap - remove axis etc</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  theme<span class="ot">&lt;-</span><span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>,<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),<span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),<span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>(),<span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),<span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),<span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>())</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="co">#plot the data as a greyscale heatmap</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(m, <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y,<span class="at">fill=</span>value))<span class="sc">+</span><span class="fu">scale_fill_gradient</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="fu">min</span>(m<span class="sc">$</span>value), <span class="fu">max</span>(m<span class="sc">$</span>value)), <span class="at">low =</span> <span class="st">'white'</span>, <span class="at">high =</span> <span class="st">'black'</span>)<span class="sc">+</span><span class="fu">geom_tile</span>()<span class="sc">+</span>theme</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#define a row for use as tester</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>testrow<span class="ot">&lt;-</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#call the function on a row of your choice for reference image</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_digit</span>(train, testrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#run PCA on the full dataset</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>full_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train, <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#run PCA on a subset of the data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>train_pca_sub<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,], <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#view the plot of PCs versus variance explained</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(train_pca_sub<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(train_pca_sub<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(train_pca_sub)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(train_pca_sub)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#find the number of PCs needed for all the labels to return correctly</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(train)){</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   pc.use<span class="ot">&lt;-</span>x</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   train_trunc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">round</span>(train_pca_sub<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span>pc.use] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_sub<span class="sc">$</span>rotation[,<span class="dv">1</span><span class="sc">:</span>pc.use]),<span class="dv">0</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span>(<span class="fu">all.equal</span>(train_trunc<span class="sc">$</span>label,train<span class="sc">$</span>label[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])<span class="sc">==</span><span class="cn">TRUE</span>){</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>     num_req<span class="ot">&lt;-</span><span class="fu">cat</span>(<span class="st">"Number of PCs for accurate labels:"</span>,pc.use)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>     <span class="cf">break</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of PCs for accurate labels: 567</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>num_req</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pc.use <span class="ot">&lt;-</span> <span class="dv">567</span> <span class="co"># number of PCs needed to correctly assign labels and make background white</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>train_trunc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">round</span>(train_pca_sub<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span>pc.use] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_sub<span class="sc">$</span>rotation[,<span class="dv">1</span><span class="sc">:</span>pc.use]),<span class="dv">0</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_digit</span>(train_trunc,testrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>train_pca_low<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,], <span class="at">center=</span><span class="cn">FALSE</span>, <span class="at">rank. =</span> <span class="dv">75</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">data.frame</span>(train_pca_low<span class="sc">$</span>x[testrow,] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_low<span class="sc">$</span>rotation))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_digit</span>(test,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="question-2." class="level3">
+<h3 class="anchored" data-anchor-id="question-2.">Question 2.</h3>
+<p><strong>Draw a tree of the pixels, and see if you can explain the results based on geometry of the pixels (how far apart are they in the 2-d space). Try to Explain the PCA results in light of this.</strong></p>
+<p>By creating the dendrogram, we can see that the pixels with little to no data in them (mostly the edges of the images) cluster together and make up about 25% of the data. This is consistent with the above finding that 75% of the PCs were required to recreate the images.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dendextend' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+---------------------
+Welcome to dendextend version 1.16.0
+Type citation('dendextend') for how to cite the package.
+
+Type browseVignettes(package = 'dendextend') for the package vignette.
+The github page is: https://github.com/talgalili/dendextend/
+
+Suggestions and bug-reports can be submitted at: https://github.com/talgalili/dendextend/issues
+You may ask questions at stackoverflow, use the r and dendextend tags: 
+     https://stackoverflow.com/questions/tagged/dendextend
+
+    To suppress this message use:  suppressPackageStartupMessages(library(dendextend))
+---------------------</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dendextend'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggdendro':
+
+    theme_dendro</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    cutree</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="96"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3." class="level3">
+<h3 class="anchored" data-anchor-id="question-3.">Question 3.</h3>
+<p><strong>Can you use some of the tools you have learnt to build a classifier,so if you get a new set of pixels you can predict what is in the picture. This is a the start of a real project, but you don’t have all the tools (such as neural networks) which might be more suited for this task. Split your dataset into two (a training set and a test set), build your classifier and figure out how well it does with the test data in predicting the digits. Define the sensitivity and specificity of your classifier. How well does it recognize your own handwriting? (make sure your handwriting is not in the training set)</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#split data into 70% test and 30% train</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>split1<span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">nrow</span>(train)), <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fl">0.3</span> <span class="sc">*</span> <span class="fu">nrow</span>(train))))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>hw_train<span class="ot">&lt;-</span>train[split1 <span class="sc">==</span> <span class="dv">0</span>,]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>hw_test<span class="ot">&lt;-</span>train[split1 <span class="sc">==</span> <span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will be be addressed using three different levels of algorithmic complexity.</p>
+<p>3.a. Machine learning algorithms/neural networks are the obvious choice for this task, but first we will try to classify by simply using the average for each digit and correlating against that. Using this method is about 80% accurate. When comparing to the handwriting samples I created, it was limited by the fact that there was only a single comparison, between the average and the sample for each digit. It was able to identify five of the digits correctly.</p>
+<p>3.b. The results of the correlative approach seemed insufficient, so using a machine learning model with PCA was the next step. By reducing dimensions and using LDA, we hope to classify each digit using a smaller number of the PC values instead of all 784 pixel columns. However, the performance of this model is poor despite various attempts to optimize, including using up to 500 PCs. The specificity and recall (the term sensitivity only applies to binary classification) were both far below acceptable standards, approximately between 0 and 0.2 depending on the digit being evaluated.</p>
+<p>3.c. The PCA model was disappointing as well. Thus, a more proper machine learning algorithm seems to be required. We next evaluate a random forest model. This model uses much less time and lines of code, and has an accuracy of 95% when applied to the test set. However, it is completely unable to identify any of the experimental handwritten digit samples. When applied to the averages for each digit, it can correctly identify 4 out of the 10. The failure to identify the handwriting samples may be due to the scale of the images in both position and intensity - the amount of whitespace outside the writing is not exactly the same, and the intensity of the black color is less in the samples. It may perform better if each image in both sets had any row or column in the 28x28 image with a maximum value below a certain threshold removed, and with the color normalized so that the darkest black part is always equal to the maximum.</p>
+<p>As a final observation, the basic correlative approach performed surprisingly well compared to more advanced algorithmic techniques.</p>
+<section id="a.-correlation-based-classification" class="level4">
+<h4 class="anchored" data-anchor-id="a.-correlation-based-classification">3.a. Correlation Based Classification</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create digit averages from the training set</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#create empty dataframe for the averages</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>digit_averages<span class="ot">&lt;-</span>train[<span class="cn">FALSE</span>,]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#loop to get the averages for each digit 0-9</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>){</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#subset the data for the digit </span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  digit_subset<span class="ot">&lt;-</span> hw_train[<span class="fu">which</span>(hw_train[,<span class="dv">1</span>]<span class="sc">==</span>x),]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#average the columns</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  digit_subset<span class="ot">&lt;-</span><span class="fu">colMeans</span>(digit_subset)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#add it to the dataset of averages</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  digit_averages<span class="ot">&lt;-</span><span class="fu">rbind</span>(digit_averages,digit_subset)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">#rename the rows to the digit they represent, otherwise the labels start at 1 instead of 0</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(digit_averages)<span class="ot">&lt;-</span><span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(digit_averages)<span class="ot">&lt;-</span><span class="fu">colnames</span>(train)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">#call the function on the average data for the digit of your choice</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sample a row from the test set</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sample<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hw_test),<span class="dv">1</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#store the correlation and digit with the highest correlation</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>highest_cor<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>digit<span class="ot">&lt;-</span><span class="fu">as.integer</span>()</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#compare the correlation of each average digit to the test</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  test<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(hw_test[sample,<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>])</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  avg<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(digit_averages[x,<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>])</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  test_cor<span class="ot">&lt;-</span><span class="fu">cor</span>(test, avg)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(test_cor<span class="sc">&gt;</span>highest_cor){</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    highest_cor<span class="ot">&lt;-</span>test_cor</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    digit<span class="ot">&lt;-</span>digit_averages[x,<span class="st">"label"</span>]</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#print the guess, correct answer, and correlation</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Guess:"</span>,digit,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Guess: 6 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Actual:"</span>,hw_test[sample,<span class="st">"label"</span>],<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Actual: 9 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correlation:"</span>,highest_cor,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Correlation: 0.5290797 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#function to do the above, returns true or false and the test information</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>test_classifier<span class="ot">&lt;-</span><span class="cf">function</span>(test_data,digit_averages){</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  sample<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test_data),<span class="dv">1</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  highest_cor<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  digit<span class="ot">&lt;-</span><span class="fu">as.integer</span>()</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    test<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(test_data[sample,<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>])</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    avg<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(digit_averages[x,<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>])</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    test_cor<span class="ot">&lt;-</span><span class="fu">cor</span>(test, avg)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(test_cor<span class="sc">&gt;</span>highest_cor){</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>      highest_cor<span class="ot">&lt;-</span>test_cor</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>      digit<span class="ot">&lt;-</span>digit_averages[x,<span class="st">"label"</span>]</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  result<span class="ot">&lt;-</span><span class="fu">c</span>(digit,test_data[sample,<span class="st">"label"</span>],digit<span class="sc">==</span>test_data[sample,<span class="st">"label"</span>],highest_cor)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test the function</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">test_classifier</span>(hw_test,digit_averages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.0000000 8.0000000 1.0000000 0.7338815</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test accuracy of the method</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>count<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>total<span class="ot">&lt;-</span><span class="dv">100</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>total){</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  result<span class="ot">&lt;-</span><span class="fu">test_classifier</span>(hw_test,digit_averages)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">3</span>]){</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    count<span class="ot">&lt;-</span>count<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#cat(count)</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>success_percent<span class="ot">&lt;-</span>count<span class="sc">/</span>total</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(success_percent<span class="sc">*</span><span class="dv">100</span>,<span class="st">"% Correct"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>78 % Correct</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## average over a small square (fac x fac) </span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ave_by_fac <span class="ot">&lt;-</span> <span class="cf">function</span>(i1,fac,ii,jj){</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  ave<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  cnt<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>fac)){</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>fac)){</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>      cnt <span class="ot">=</span> cnt <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>      x <span class="ot">=</span> (ii<span class="dv">-1</span>)<span class="sc">*</span>fac<span class="sc">+</span>i;</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>      y <span class="ot">=</span> (jj<span class="dv">-1</span>)<span class="sc">*</span>fac<span class="sc">+</span>j;</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>      <span class="do">##         cat("i,j,ii,jj,x,y=",i,j,ii,jj,x,y,"\n");</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>      ave <span class="ot">=</span> ave<span class="sc">+</span>     i1[x,y];</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    }}</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  ave <span class="ot">=</span> ave<span class="sc">/</span>cnt;</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ave);</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="do">## function I wrote to scale down a square image to a 28 x 28 image</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="do">## uses the averaging function above</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>scale_down_image <span class="ot">&lt;-</span> <span class="cf">function</span>(img_in) {</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  <span class="do">## fac is the factor by which you have to scale the image to become a</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 28 x 28 square</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  fac <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">dim</span>(img_in)[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">28</span>); </span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  im_out <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">28</span>,<span class="at">ncol=</span><span class="dv">28</span>);</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>)){</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>)){</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>      im_out[i,j] <span class="ot">=</span> <span class="fu">ave_by_fac</span>(img_in,fac,i,j);</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    }}</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(im_out);</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Get data</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vctrs)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co">#function to take png image and convert it to same format as train.csv data</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>print_HW_digit<span class="ot">&lt;-</span><span class="cf">function</span>(img, label){</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#apply image scaling function</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">scale_down_image</span>(img[,,<span class="dv">2</span>])</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rescale values in the data to match given data, 0=white, 255=black</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">abs</span>(img_scaled<span class="dv">-1</span>)</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span>img_scaled<span class="sc">-</span><span class="fu">min</span>(img_scaled)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span>img_scaled<span class="sc">*</span><span class="dv">255</span></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">round</span>(img_scaled,<span class="dv">0</span>)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">#transpose data into correct orientation</span></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">t</span>(img_scaled)</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#create the label as a dataframe</span></span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>  label<span class="ot">&lt;-</span><span class="fu">data.frame</span>(label)</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">#melt the image data so it is in long format</span></span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>  img_m<span class="ot">&lt;-</span><span class="fu">melt</span>(img_scaled)</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">#select only the values, excluding the x y coordinates</span></span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>  img_m<span class="ot">&lt;-</span>img_m<span class="sc">$</span>value</span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">#convert the linearized data into a data frame and transpose it so it is a row not a column</span></span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>  img_lin<span class="ot">&lt;-</span><span class="fu">data.frame</span>(img_m)</span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>  img_lin<span class="ot">&lt;-</span><span class="fu">t</span>(img_lin)</span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">#put the label in the first column</span></span>
+<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>  img_lab<span class="ot">&lt;-</span><span class="fu">cbind</span>(label, img_lin)</span>
+<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">#label the columns and the row</span></span>
+<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(img_lab)<span class="ot">&lt;-</span><span class="fu">colnames</span>(train)</span>
+<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(img_lab)<span class="ot">&lt;-</span>label</span>
+<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>  <span class="co">#return the transformed data</span></span>
+<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(img_lab)</span>
+<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create empty dataframe to store results</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span>train[<span class="cn">FALSE</span>,]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">#call the function for each digit and store the results</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"zero.png"</span>),<span class="st">"0"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"one.png"</span>),<span class="st">"1"</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"two.png"</span>),<span class="st">"2"</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"three.png"</span>),<span class="st">"3"</span>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"four.png"</span>),<span class="st">"4"</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"five.png"</span>),<span class="st">"5"</span>)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"six.png"</span>),<span class="st">"6"</span>)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"seven.png"</span>),<span class="st">"7"</span>)</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"eight.png"</span>),<span class="st">"8"</span>)</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"nine.png"</span>),<span class="st">"9"</span>)</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test output of function with handwriting data</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">test_classifier</span>(HW_digits,digit_averages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "6"                  "7"                  "FALSE"             
+[4] "0.0952867306569966"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test accuracy of method on handwriting data</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>digit_accuracy<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">10</span>))</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>digit_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(digit_accuracy) <span class="ot">&lt;-</span> digit_names</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(digit_accuracy) <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Correct Correlation"</span>, <span class="st">"Highest Correlation"</span>,<span class="st">"Correct"</span>,<span class="st">"Total"</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>count<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>total<span class="ot">&lt;-</span><span class="dv">100</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>digit_accuracy[,]<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>total){</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  result<span class="ot">&lt;-</span><span class="fu">test_classifier</span>(HW_digits,digit_averages)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  y<span class="ot">&lt;-</span>result[<span class="dv">2</span>]</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  digit_count<span class="ot">&lt;-</span>digit_accuracy[y,<span class="dv">4</span>]</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  digit_accuracy[y,<span class="dv">4</span>]<span class="ot">&lt;-</span>digit_count<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">3</span>]){</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    count<span class="ot">&lt;-</span>count<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">3</span>]<span class="ot">&lt;-</span>digit_accuracy[y,<span class="dv">3</span>]<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">1</span>]<span class="ot">&lt;-</span>result[<span class="dv">4</span>]</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">4</span>]<span class="sc">&gt;</span>digit_accuracy[y,<span class="dv">2</span>]){</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">2</span>]<span class="ot">&lt;-</span>result[<span class="dv">4</span>]</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>success_percent<span class="ot">&lt;-</span>count<span class="sc">/</span>total</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(success_percent<span class="sc">*</span><span class="dv">100</span>,<span class="st">"% Correct"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>55 % Correct</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>digit_accuracy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Correct Correlation Highest Correlation Correct Total
+0   0.326761636001939   0.326761636001939      11    11
+1   0.486871225431793   0.486871225431793       5     5
+2   0.422374510812762   0.422374510812762       9     9
+3   0.392990157397671   0.392990157397671      17    17
+4                   0   0.321745670185552       0     5
+5   0.420944899372523   0.420944899372523      13    13
+6                   0   0.237934598072985       0    11
+7                   0  0.0952867306569966       0     8
+8                   0   0.418092972524254       0     9
+9                   0   0.289121378714739       0    12</code></pre>
+</div>
+</div>
+</section>
+<section id="b.-pca-model" class="level4">
+<h4 class="anchored" data-anchor-id="b.-pca-model">3.b. PCA model</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#PCA model</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#for this method we will perform the PCA dimensionality reduction on the testing and training data, excluding the labels</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>train_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(hw_train[<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>], <span class="at">center=</span><span class="cn">FALSE</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>test_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(hw_test[<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>], <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#once reduced to principal components, the labels are added back in</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>train_pca_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">as.numeric</span>(hw_train<span class="sc">$</span>label),<span class="fu">cbind</span>(train_pca<span class="sc">$</span>x))</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(train_pca_df)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"label"</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>test_pca_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">as.numeric</span>(hw_test<span class="sc">$</span>label),<span class="fu">cbind</span>(test_pca<span class="sc">$</span>x))</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(test_pca_df)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"label"</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co">#the model includes up to PC10</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>pca_model<span class="ot">&lt;-</span><span class="fu">lda</span>(label<span class="sc">~</span>PC1<span class="sc">+</span>PC2<span class="sc">+</span>PC3<span class="sc">+</span>PC4<span class="sc">+</span>PC5<span class="sc">+</span>PC6<span class="sc">+</span>PC7<span class="sc">+</span>PC8<span class="sc">+</span>PC9<span class="sc">+</span>PC10, <span class="at">data=</span>train_pca_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use the model to predict the values in the test set</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>hw_pca_predict<span class="ot">&lt;-</span><span class="fu">predict</span>(pca_model, <span class="at">newdata=</span>test_pca_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#compare the counts of each number predicted</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hw_pca_predict<span class="sc">$</span>class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   0    1    2    3    4    5    6    7    8    9 
+1003  693 1364 1430 1649 2249 1097 1008 1219  888 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hw_test<span class="sc">$</span>label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9 
+1243 1428 1261 1330 1167 1142 1256 1314 1237 1222 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#count how many the model got right</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>comp<span class="ot">&lt;-</span>hw_pca_predict<span class="sc">$</span>class<span class="sc">==</span>hw_test<span class="sc">$</span>label</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(comp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>comp
+FALSE  TRUE 
+11505  1095 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model by performance metrics</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mltest)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>model_eval <span class="ot">&lt;-</span> <span class="fu">ml_test</span>(hw_pca_predict<span class="sc">$</span>class, hw_test<span class="sc">$</span>label)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>model_eval<span class="sc">$</span>balanced.accuracy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        0         1         2         3         4         5         6         7 
+0.2613755 0.3062081 0.2717016 0.2259087 0.3368947 0.2491913 0.2684719 0.2685440 
+        8         9 
+0.2655990 0.3667778 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>model_eval<span class="sc">$</span>precision</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          0           1           2           3           4           5 
+0.000997009 0.000000000 0.096774194 0.018181818 0.220133414 0.100489106 
+          6           7           8           9 
+0.042844120 0.020833333 0.060705496 0.230855856 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>model_eval<span class="sc">$</span>recall</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           0            1            2            3            4            5 
+0.0008045052 0.0000000000 0.1046788263 0.0195488722 0.3110539846 0.1978984238 
+           6            7            8            9 
+0.0374203822 0.0159817352 0.0598221504 0.1677577741 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#repeat this process for the handwritten digit samples</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>HW_digit_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(HW_digits[,<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>], <span class="at">center =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>HW_digit_pca_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">cbind</span>(HW_digit_pca<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]),<span class="fu">as.numeric</span>(HW_digits<span class="sc">$</span>label))</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(HW_digit_pca_df)[<span class="dv">11</span>]<span class="ot">&lt;-</span><span class="st">"label"</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>hw_digit_pca_predict<span class="ot">&lt;-</span><span class="fu">predict</span>(pca_model, <span class="at">newdata=</span>HW_digit_pca_df)</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>digit_model_eval<span class="ot">&lt;-</span><span class="fu">ml_test</span>(hw_digit_pca_predict<span class="sc">$</span>class,HW_digits<span class="sc">$</span>label, <span class="at">output.as.table =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="c.-random-forest-model" class="level4">
+<h4 class="anchored" data-anchor-id="c.-random-forest-model">3.c. Random Forest model</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#random forest method</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co">#set the parameters for the random forest model</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'randomForest' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>randomForest 4.7-1.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'randomForest'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    margin</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>numTrees <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>rf_labels<span class="ot">&lt;-</span><span class="fu">as.factor</span>(hw_train<span class="sc">$</span>label)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>rf_test<span class="ot">&lt;-</span>hw_test[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>rf_train<span class="ot">&lt;-</span>hw_train[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="co">#create the model, testing it on the test data</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(rf_train, rf_labels, <span class="at">xtest=</span>rf_test, </span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ntree=</span>numTrees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#count how many the model got right by comparing the predictions to the labels</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>comp<span class="ot">&lt;-</span><span class="fu">data.frame</span>(rf<span class="sc">$</span>test<span class="sc">$</span>predicted,hw_test<span class="sc">$</span>label,rf<span class="sc">$</span>test<span class="sc">$</span>predicted<span class="sc">==</span>hw_test<span class="sc">$</span>label)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(comp)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Predicted"</span>,<span class="st">"Actual"</span>,<span class="st">"Accuracy"</span>)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate and report the performance metrics and summary</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>rf_comp<span class="ot">&lt;-</span><span class="fu">table</span>(comp<span class="sc">$</span>Accuracy)</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>rf_accuracy<span class="ot">&lt;-</span>rf_comp[<span class="dv">2</span>]<span class="sc">/</span>(rf_comp[<span class="dv">1</span>]<span class="sc">+</span>rf_comp[<span class="dv">2</span>])<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">as.matrix</span>(comp),<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Predicted Actual Accuracy
+11 "8"       "8"    "TRUE"  
+17 "2"       "2"    "TRUE"  
+18 "0"       "0"    "TRUE"  
+23 "2"       "2"    "TRUE"  
+24 "0"       "0"    "TRUE"  
+28 "9"       "9"    "TRUE"  
+29 "9"       "9"    "TRUE"  
+32 "9"       "9"    "TRUE"  
+40 "4"       "4"    "TRUE"  
+44 "7"       "4"    "FALSE" 
+57 "2"       "2"    "TRUE"  
+58 "3"       "3"    "TRUE"  
+61 "2"       "1"    "FALSE" 
+62 "1"       "1"    "TRUE"  
+64 "0"       "0"    "TRUE"  
+66 "3"       "3"    "TRUE"  
+67 "4"       "4"    "TRUE"  
+69 "1"       "1"    "TRUE"  
+73 "6"       "6"    "TRUE"  
+74 "2"       "2"    "TRUE"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>rf_comp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+  587 12013 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Random Forest accuracy:"</span>,rf_accuracy[[<span class="dv">1</span>]],<span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Random Forest accuracy: 95.34127 %</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">#applying the RF classifier to the handwritten data</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>rf2<span class="ot">&lt;-</span> <span class="fu">randomForest</span>(rf_train, rf_labels, <span class="at">xtest=</span>HW_digits[<span class="sc">-</span><span class="dv">1</span>], </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ntree=</span>numTrees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co">#count how many the model got right by comparing the predictions to the labels</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>comp2<span class="ot">&lt;-</span><span class="fu">data.frame</span>(rf2<span class="sc">$</span>test<span class="sc">$</span>predicted,rf2<span class="sc">$</span>test<span class="sc">$</span>predicted<span class="sc">==</span>HW_digits<span class="sc">$</span>label, <span class="at">row.names =</span> HW_digits<span class="sc">$</span>label)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(comp2)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Predicted"</span>,<span class="st">"Accuracy"</span>)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate and report the performance metrics and summary</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>rf_comp2<span class="ot">&lt;-</span><span class="fu">table</span>(comp2<span class="sc">$</span>Accuracy)</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>rf_accuracy2<span class="ot">&lt;-</span>rf_comp2[<span class="dv">2</span>]<span class="sc">/</span>(rf_comp2[<span class="dv">1</span>]<span class="sc">+</span>rf_comp2[<span class="dv">2</span>])<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="fu">as.matrix</span>(comp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Predicted Accuracy
+0 "5"       "FALSE" 
+1 "8"       "FALSE" 
+2 "3"       "FALSE" 
+3 "5"       "FALSE" 
+4 "5"       "FALSE" 
+5 "5"       "TRUE"  
+6 "6"       "TRUE"  
+7 "5"       "FALSE" 
+8 "5"       "FALSE" 
+9 "5"       "FALSE" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>rf_comp2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+    8     2 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Random Forest accuracy:"</span>,rf_accuracy2[[<span class="dv">1</span>]],<span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Random Forest accuracy: 20 %</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="question-4." class="level3">
+<h3 class="anchored" data-anchor-id="question-4.">Question 4.</h3>
+<p><strong>You can try simple things like take average of all data for each number and then take a “dot” product with your test set, and identify the pixels. This might work, maybe for some digits, and not others.</strong></p>
+<p>Here we will see which of the digit averages is best classified by the Random Forest model. This model is only about to correctly identify 4 of the 10 digits.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co">#applying the RF classifier to the handwritten data</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>rf3<span class="ot">&lt;-</span> <span class="fu">randomForest</span>(rf_train, rf_labels, <span class="at">xtest=</span>digit_averages[<span class="sc">-</span><span class="dv">1</span>], </span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ntree=</span>numTrees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co">#count how many the model got right by comparing the predictions to the labels</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>comp3<span class="ot">&lt;-</span><span class="fu">data.frame</span>(rf3<span class="sc">$</span>test<span class="sc">$</span>predicted,rf3<span class="sc">$</span>test<span class="sc">$</span>predicted<span class="sc">==</span>HW_digits<span class="sc">$</span>label,<span class="at">row.names =</span> HW_digits<span class="sc">$</span>label)</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(comp3)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Predicted"</span>,<span class="st">"Accuracy"</span>)</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate and report the performance metrics and summary</span></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>rf_comp3<span class="ot">&lt;-</span><span class="fu">table</span>(comp3<span class="sc">$</span>Accuracy)</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>rf_accuracy3<span class="ot">&lt;-</span>rf_comp3[<span class="dv">2</span>]<span class="sc">/</span>(rf_comp3[<span class="dv">1</span>]<span class="sc">+</span>rf_comp3[<span class="dv">2</span>])<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a><span class="fu">as.matrix</span>(comp3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Predicted Accuracy
+0 "0"       "TRUE"  
+1 "8"       "FALSE" 
+2 "8"       "FALSE" 
+3 "8"       "FALSE" 
+4 "8"       "FALSE" 
+5 "8"       "FALSE" 
+6 "6"       "TRUE"  
+7 "8"       "FALSE" 
+8 "8"       "TRUE"  
+9 "8"       "FALSE" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>rf_comp3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+    7     3 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Random Forest accuracy:"</span>,rf_accuracy3[<span class="dv">1</span>],<span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Random Forest accuracy: 30 %</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
