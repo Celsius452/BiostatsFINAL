@@ -238,8 +238,10 @@ test_classifier(hw_test,digit_averages)
 #test accuracy of the method
 count<-0
 total<-100
+all_results<-test_classifier(hw_test,digit_averages)
 for(x in 1:total){
   result<-test_classifier(hw_test,digit_averages)
+  all_results<-rbind(all_results,result)
   if(result[3]){
     count<-count+1
     #cat(count)
@@ -247,6 +249,11 @@ for(x in 1:total){
 }
 success_percent<-count/total
 cat(success_percent*100,"% Correct")
+```
+
+```{r}
+colnames(all_results)<-c("Prediction","Actual","Accuracy","Correlation")
+head(all_results, 10)
 ```
 
 ```{r}
