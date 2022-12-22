@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -123,6 +123,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
   </div>
     
+  
     
   </div>
   
@@ -137,7 +138,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="question-1." class="level3">
 <h3 class="anchored" data-anchor-id="question-1."><strong>Question 1.</strong></h3>
 <p><strong>Use PCA to reduce dimensions. How many components do you need to keep to reproduce the digits reasonably well? what is your final matrix?</strong></p>
-<p>To capture ~94% of the variance, 75 PCs is enough, and based on plots of the cumulative variance, the elbow at which diminishing returns for including additional PCs starts about here. The drawn images are recognizable at this level, and even at lower thresholds around 20~30 PCs the images can be visually interpreted. However, the background is not correctly reflected as completely white, and the label assignments are not correct even at 75 PCs or higher, despite cumulative variance totaling ~99%. To reach the highest level of accuracy at which the background and labels are correct, 567 PCs are needed. This amount is still 75% of the original number of components, which isn’t an excellent reduction of dimensions. Excluding the labels could potentially improve the dimensionality reduction, though they are a single column with fairly low variance.</p>
+<p>To capture ~94% of the variance, 75 PCs is enough, and based on plots of the cumulative variance, the elbow at which diminishing returns for including additional PCs starts about here. The drawn images are recognizable at this level, and even at lower thresholds around 20~30 PCs the images can be visually interpreted. However, the background is not correctly reflected as completely white, and the label assignments are not correct even at 75 PCs or higher, despite cumulative variance totaling ~99%. To reach the highest level of accuracy at which the background and labels are correct, 576 PCs are needed. This amount is still 75% of the original number of components, which isn’t an excellent reduction of dimensions. Excluding the labels could potentially improve the dimensionality reduction, though they are a single column with fairly low variance.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import data, libraries, and set working directory</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#current_path = rstudioapi::getActiveDocumentContext()$path </span></span>
@@ -200,58 +201,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'ggplot2' was built under R version 4.2.2</code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'reshape2' was built under R version 4.2.2</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#run PCA on the full dataset</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>full_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train, <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#run PCA on the full dataset</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>full_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train, <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#run PCA on a subset of the data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>train_pca_sub<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,], <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#run PCA on a subset of the data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>train_pca_sub<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,], <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#view the plot of PCs versus variance explained</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(train_pca_sub<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(train_pca_sub<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#view the plot of PCs versus variance explained</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(train_pca_sub<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(train_pca_sub<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(train_pca_sub)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(train_pca_sub)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(train_pca_sub)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(train_pca_sub)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#find the number of PCs needed for all the labels to return correctly</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(train)){</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   pc.use<span class="ot">&lt;-</span>x</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   train_trunc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">round</span>(train_pca_sub<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span>pc.use] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_sub<span class="sc">$</span>rotation[,<span class="dv">1</span><span class="sc">:</span>pc.use]),<span class="dv">0</span>))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span>(<span class="fu">all.equal</span>(train_trunc<span class="sc">$</span>label,train<span class="sc">$</span>label[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])<span class="sc">==</span><span class="cn">TRUE</span>){</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>     num_req<span class="ot">&lt;-</span><span class="fu">cat</span>(<span class="st">"Number of PCs for accurate labels:"</span>,pc.use)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>     <span class="cf">break</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>   }</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#find the number of PCs needed for all the labels to return correctly</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(train)){</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   pc.use<span class="ot">&lt;-</span>x</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   train_trunc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">round</span>(train_pca_sub<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span>pc.use] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_sub<span class="sc">$</span>rotation[,<span class="dv">1</span><span class="sc">:</span>pc.use]),<span class="dv">0</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span>(<span class="fu">all.equal</span>(train_trunc<span class="sc">$</span>label,train<span class="sc">$</span>label[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])<span class="sc">==</span><span class="cn">TRUE</span>){</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>     PCs_needed<span class="ot">&lt;-</span>pc.use</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>     <span class="cf">break</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of PCs for accurate labels:"</span>,PCs_needed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of PCs for accurate labels: 567</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>num_req</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pc.use <span class="ot">&lt;-</span> <span class="dv">567</span> <span class="co"># number of PCs needed to correctly assign labels and make background white</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>train_trunc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">round</span>(train_pca_sub<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span>pc.use] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_sub<span class="sc">$</span>rotation[,<span class="dv">1</span><span class="sc">:</span>pc.use]),<span class="dv">0</span>))</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_digit</span>(train_trunc,testrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pc.use <span class="ot">&lt;-</span> <span class="dv">576</span> <span class="co"># number of PCs needed to correctly assign labels and make background white</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>train_trunc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">round</span>(train_pca_sub<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span>pc.use] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_sub<span class="sc">$</span>rotation[,<span class="dv">1</span><span class="sc">:</span>pc.use]),<span class="dv">0</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_digit</span>(train_trunc,testrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>train_pca_low<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,], <span class="at">center=</span><span class="cn">FALSE</span>, <span class="at">rank. =</span> <span class="dv">75</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">data.frame</span>(train_pca_low<span class="sc">$</span>x[testrow,] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_low<span class="sc">$</span>rotation))</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_digit</span>(test,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>train_pca_low<span class="ot">&lt;-</span><span class="fu">prcomp</span>(train[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,], <span class="at">center=</span><span class="cn">FALSE</span>, <span class="at">rank. =</span> <span class="dv">75</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">data.frame</span>(train_pca_low<span class="sc">$</span>x[testrow,] <span class="sc">%*%</span> <span class="fu">t</span>(train_pca_low<span class="sc">$</span>rotation))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_digit</span>(test,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dm5153-Final-Project---Dataset-2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -262,6 +262,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Draw a tree of the pixels, and see if you can explain the results based on geometry of the pixels (how far apart are they in the 2-d space). Try to Explain the PCA results in light of this.</strong></p>
 <p>By creating the dendrogram, we can see that the pixels with little to no data in them (mostly the edges of the images) cluster together and make up about 25% of the data. This is consistent with the above finding that 75% of the PCs were required to recreate the images.</p>
 <div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggdendro' was built under R version 4.2.2</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'dendextend' was built under R version 4.2.2</code></pre>
 </div>
@@ -358,15 +361,15 @@ Attaching package: 'dendextend'</code></pre>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#print the guess, correct answer, and correlation</span></span>
 <span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Guess:"</span>,digit,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Guess: 6 </code></pre>
+<pre><code>Guess: 5 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Actual:"</span>,hw_test[sample,<span class="st">"label"</span>],<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Actual: 9 </code></pre>
+<pre><code>Actual: 5 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correlation:"</span>,highest_cor,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Correlation: 0.5290797 </code></pre>
+<pre><code>Correlation: 0.5173597 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -392,250 +395,298 @@ Attaching package: 'dendextend'</code></pre>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test the function</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">test_classifier</span>(hw_test,digit_averages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.0000000 8.0000000 1.0000000 0.7338815</code></pre>
+<pre><code>[1] 5.0000000 5.0000000 1.0000000 0.7884396</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test accuracy of the method</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>count<span class="ot">&lt;-</span><span class="dv">0</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>total<span class="ot">&lt;-</span><span class="dv">100</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>total){</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  result<span class="ot">&lt;-</span><span class="fu">test_classifier</span>(hw_test,digit_averages)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">3</span>]){</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    count<span class="ot">&lt;-</span>count<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#cat(count)</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>success_percent<span class="ot">&lt;-</span>count<span class="sc">/</span>total</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(success_percent<span class="sc">*</span><span class="dv">100</span>,<span class="st">"% Correct"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>all_results<span class="ot">&lt;-</span><span class="fu">test_classifier</span>(hw_test,digit_averages)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>total){</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  result<span class="ot">&lt;-</span><span class="fu">test_classifier</span>(hw_test,digit_averages)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  all_results<span class="ot">&lt;-</span><span class="fu">rbind</span>(all_results,result)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">3</span>]){</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    count<span class="ot">&lt;-</span>count<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#cat(count)</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>success_percent<span class="ot">&lt;-</span>count<span class="sc">/</span>total</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(success_percent<span class="sc">*</span><span class="dv">100</span>,<span class="st">"% Correct"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>78 % Correct</code></pre>
+<pre><code>75 % Correct</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## average over a small square (fac x fac) </span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ave_by_fac <span class="ot">&lt;-</span> <span class="cf">function</span>(i1,fac,ii,jj){</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  ave<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  cnt<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>fac)){</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>fac)){</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>      cnt <span class="ot">=</span> cnt <span class="sc">+</span><span class="dv">1</span>;</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>      x <span class="ot">=</span> (ii<span class="dv">-1</span>)<span class="sc">*</span>fac<span class="sc">+</span>i;</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>      y <span class="ot">=</span> (jj<span class="dv">-1</span>)<span class="sc">*</span>fac<span class="sc">+</span>j;</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>      <span class="do">##         cat("i,j,ii,jj,x,y=",i,j,ii,jj,x,y,"\n");</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>      ave <span class="ot">=</span> ave<span class="sc">+</span>     i1[x,y];</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  ave <span class="ot">=</span> ave<span class="sc">/</span>cnt;</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ave);</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="do">## function I wrote to scale down a square image to a 28 x 28 image</span></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="do">## uses the averaging function above</span></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>scale_down_image <span class="ot">&lt;-</span> <span class="cf">function</span>(img_in) {</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  <span class="do">## fac is the factor by which you have to scale the image to become a</span></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 28 x 28 square</span></span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  fac <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">dim</span>(img_in)[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">28</span>); </span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  im_out <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">28</span>,<span class="at">ncol=</span><span class="dv">28</span>);</span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>)){</span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>)){</span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>      im_out[i,j] <span class="ot">=</span> <span class="fu">ave_by_fac</span>(img_in,fac,i,j);</span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(im_out);</span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Get data</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vctrs)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co">#function to take png image and convert it to same format as train.csv data</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>print_HW_digit<span class="ot">&lt;-</span><span class="cf">function</span>(img, label){</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#apply image scaling function</span></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">scale_down_image</span>(img[,,<span class="dv">2</span>])</span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rescale values in the data to match given data, 0=white, 255=black</span></span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">abs</span>(img_scaled<span class="dv">-1</span>)</span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span>img_scaled<span class="sc">-</span><span class="fu">min</span>(img_scaled)</span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span>img_scaled<span class="sc">*</span><span class="dv">255</span></span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">round</span>(img_scaled,<span class="dv">0</span>)</span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">#transpose data into correct orientation</span></span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">t</span>(img_scaled)</span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#create the label as a dataframe</span></span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>  label<span class="ot">&lt;-</span><span class="fu">data.frame</span>(label)</span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">#melt the image data so it is in long format</span></span>
-<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>  img_m<span class="ot">&lt;-</span><span class="fu">melt</span>(img_scaled)</span>
-<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">#select only the values, excluding the x y coordinates</span></span>
-<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>  img_m<span class="ot">&lt;-</span>img_m<span class="sc">$</span>value</span>
-<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">#convert the linearized data into a data frame and transpose it so it is a row not a column</span></span>
-<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>  img_lin<span class="ot">&lt;-</span><span class="fu">data.frame</span>(img_m)</span>
-<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>  img_lin<span class="ot">&lt;-</span><span class="fu">t</span>(img_lin)</span>
-<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">#put the label in the first column</span></span>
-<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>  img_lab<span class="ot">&lt;-</span><span class="fu">cbind</span>(label, img_lin)</span>
-<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">#label the columns and the row</span></span>
-<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(img_lab)<span class="ot">&lt;-</span><span class="fu">colnames</span>(train)</span>
-<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(img_lab)<span class="ot">&lt;-</span>label</span>
-<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>  <span class="co">#return the transformed data</span></span>
-<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(img_lab)</span>
-<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create empty dataframe to store results</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span>train[<span class="cn">FALSE</span>,]</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">#call the function for each digit and store the results</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"zero.png"</span>),<span class="st">"0"</span>)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"one.png"</span>),<span class="st">"1"</span>)</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"two.png"</span>),<span class="st">"2"</span>)</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"three.png"</span>),<span class="st">"3"</span>)</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"four.png"</span>),<span class="st">"4"</span>)</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"five.png"</span>),<span class="st">"5"</span>)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"six.png"</span>),<span class="st">"6"</span>)</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"seven.png"</span>),<span class="st">"7"</span>)</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"eight.png"</span>),<span class="st">"8"</span>)</span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"nine.png"</span>),<span class="st">"9"</span>)</span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test output of function with handwriting data</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">test_classifier</span>(HW_digits,digit_averages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(all_results)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Prediction"</span>,<span class="st">"Actual"</span>,<span class="st">"Accuracy"</span>,<span class="st">"Correlation"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_results, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "6"                  "7"                  "FALSE"             
-[4] "0.0952867306569966"</code></pre>
+<pre><code>            Prediction Actual Accuracy Correlation
+all_results          3      3        1   0.7752446
+result               0      0        1   0.6150235
+result               2      2        1   0.6584950
+result               6      6        1   0.6891298
+result               6      6        1   0.6645137
+result               3      3        1   0.7083832
+result               6      6        1   0.8036371
+result               6      6        1   0.6203995
+result               0      0        1   0.6206056
+result               0      0        1   0.8038243</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test accuracy of method on handwriting data</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>digit_accuracy<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">10</span>))</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>digit_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(digit_accuracy) <span class="ot">&lt;-</span> digit_names</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(digit_accuracy) <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Correct Correlation"</span>, <span class="st">"Highest Correlation"</span>,<span class="st">"Correct"</span>,<span class="st">"Total"</span>)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>count<span class="ot">&lt;-</span><span class="dv">0</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>total<span class="ot">&lt;-</span><span class="dv">100</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>digit_accuracy[,]<span class="ot">&lt;-</span><span class="dv">0</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>total){</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  result<span class="ot">&lt;-</span><span class="fu">test_classifier</span>(HW_digits,digit_averages)</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  y<span class="ot">&lt;-</span>result[<span class="dv">2</span>]</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  digit_count<span class="ot">&lt;-</span>digit_accuracy[y,<span class="dv">4</span>]</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  digit_accuracy[y,<span class="dv">4</span>]<span class="ot">&lt;-</span>digit_count<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">3</span>]){</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    count<span class="ot">&lt;-</span>count<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">3</span>]<span class="ot">&lt;-</span>digit_accuracy[y,<span class="dv">3</span>]<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">1</span>]<span class="ot">&lt;-</span>result[<span class="dv">4</span>]</span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">4</span>]<span class="sc">&gt;</span>digit_accuracy[y,<span class="dv">2</span>]){</span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">2</span>]<span class="ot">&lt;-</span>result[<span class="dv">4</span>]</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>success_percent<span class="ot">&lt;-</span>count<span class="sc">/</span>total</span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(success_percent<span class="sc">*</span><span class="dv">100</span>,<span class="st">"% Correct"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>55 % Correct</code></pre>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## average over a small square (fac x fac) </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>ave_by_fac <span class="ot">&lt;-</span> <span class="cf">function</span>(i1,fac,ii,jj){</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  ave<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  cnt<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>fac)){</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>fac)){</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>      cnt <span class="ot">=</span> cnt <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>      x <span class="ot">=</span> (ii<span class="dv">-1</span>)<span class="sc">*</span>fac<span class="sc">+</span>i;</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>      y <span class="ot">=</span> (jj<span class="dv">-1</span>)<span class="sc">*</span>fac<span class="sc">+</span>j;</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>      <span class="do">##         cat("i,j,ii,jj,x,y=",i,j,ii,jj,x,y,"\n");</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>      ave <span class="ot">=</span> ave<span class="sc">+</span>     i1[x,y];</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    }}</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  ave <span class="ot">=</span> ave<span class="sc">/</span>cnt;</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ave);</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="do">## function I wrote to scale down a square image to a 28 x 28 image</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="do">## uses the averaging function above</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>scale_down_image <span class="ot">&lt;-</span> <span class="cf">function</span>(img_in) {</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="do">## fac is the factor by which you have to scale the image to become a</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 28 x 28 square</span></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  fac <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">dim</span>(img_in)[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">28</span>); </span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>  im_out <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">28</span>,<span class="at">ncol=</span><span class="dv">28</span>);</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>)){</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>)){</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>      im_out[i,j] <span class="ot">=</span> <span class="fu">ave_by_fac</span>(img_in,fac,i,j);</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>    }}</span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(im_out);</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>digit_accuracy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Get data</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vctrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'vctrs' was built under R version 4.2.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">#function to take png image and convert it to same format as train.csv data</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>print_HW_digit<span class="ot">&lt;-</span><span class="cf">function</span>(img, label){</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#apply image scaling function</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">scale_down_image</span>(img[,,<span class="dv">2</span>])</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rescale values in the data to match given data, 0=white, 255=black</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">abs</span>(img_scaled<span class="dv">-1</span>)</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span>img_scaled<span class="sc">-</span><span class="fu">min</span>(img_scaled)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span>img_scaled<span class="sc">*</span><span class="dv">255</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">round</span>(img_scaled,<span class="dv">0</span>)</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#transpose data into correct orientation</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  img_scaled<span class="ot">&lt;-</span><span class="fu">t</span>(img_scaled)</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">#create the label as a dataframe</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>  label<span class="ot">&lt;-</span><span class="fu">data.frame</span>(label)</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#melt the image data so it is in long format</span></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>  img_m<span class="ot">&lt;-</span><span class="fu">melt</span>(img_scaled)</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#select only the values, excluding the x y coordinates</span></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>  img_m<span class="ot">&lt;-</span>img_m<span class="sc">$</span>value</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">#convert the linearized data into a data frame and transpose it so it is a row not a column</span></span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>  img_lin<span class="ot">&lt;-</span><span class="fu">data.frame</span>(img_m)</span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>  img_lin<span class="ot">&lt;-</span><span class="fu">t</span>(img_lin)</span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">#put the label in the first column</span></span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>  img_lab<span class="ot">&lt;-</span><span class="fu">cbind</span>(label, img_lin)</span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>  <span class="co">#label the columns and the row</span></span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(img_lab)<span class="ot">&lt;-</span><span class="fu">colnames</span>(train)</span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(img_lab)<span class="ot">&lt;-</span>label</span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">#return the transformed data</span></span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(img_lab)</span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create empty dataframe to store results</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span>train[<span class="cn">FALSE</span>,]</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#call the function for each digit and store the results</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"zero.png"</span>),<span class="st">"0"</span>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"one.png"</span>),<span class="st">"1"</span>)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"two.png"</span>),<span class="st">"2"</span>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"three.png"</span>),<span class="st">"3"</span>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"four.png"</span>),<span class="st">"4"</span>)</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"five.png"</span>),<span class="st">"5"</span>)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"six.png"</span>),<span class="st">"6"</span>)</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"seven.png"</span>),<span class="st">"7"</span>)</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"eight.png"</span>),<span class="st">"8"</span>)</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>image<span class="ot">&lt;-</span><span class="fu">print_HW_digit</span>(<span class="fu">readPNG</span>(<span class="st">"nine.png"</span>),<span class="st">"9"</span>)</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>HW_digits<span class="ot">&lt;-</span><span class="fu">rbind</span>(HW_digits,image)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test output of function with handwriting data</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">test_classifier</span>(HW_digits,digit_averages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "5"                 "5"                 "TRUE"             
+[4] "0.420263727478807"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test accuracy of method on handwriting data</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>digit_accuracy<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">10</span>))</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>digit_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(digit_accuracy) <span class="ot">&lt;-</span> digit_names</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(digit_accuracy) <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Correct Correlation"</span>, <span class="st">"Highest Correlation"</span>,<span class="st">"Correct"</span>,<span class="st">"Total"</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>count<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>total<span class="ot">&lt;-</span><span class="dv">100</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>digit_accuracy[,]<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>total){</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  result<span class="ot">&lt;-</span><span class="fu">test_classifier</span>(HW_digits,digit_averages)</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  y<span class="ot">&lt;-</span>result[<span class="dv">2</span>]</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  digit_count<span class="ot">&lt;-</span>digit_accuracy[y,<span class="dv">4</span>]</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  digit_accuracy[y,<span class="dv">4</span>]<span class="ot">&lt;-</span>digit_count<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">3</span>]){</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>    count<span class="ot">&lt;-</span>count<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">3</span>]<span class="ot">&lt;-</span>digit_accuracy[y,<span class="dv">3</span>]<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">1</span>]<span class="ot">&lt;-</span>result[<span class="dv">4</span>]</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(result[<span class="dv">4</span>]<span class="sc">&gt;</span>digit_accuracy[y,<span class="dv">2</span>]){</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>    digit_accuracy[y,<span class="dv">2</span>]<span class="ot">&lt;-</span>result[<span class="dv">4</span>]</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>success_percent<span class="ot">&lt;-</span>count<span class="sc">/</span>total</span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(success_percent<span class="sc">*</span><span class="dv">100</span>,<span class="st">"% Correct"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>54 % Correct</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>digit_accuracy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Correct Correlation Highest Correlation Correct Total
-0   0.326761636001939   0.326761636001939      11    11
-1   0.486871225431793   0.486871225431793       5     5
-2   0.422374510812762   0.422374510812762       9     9
-3   0.392990157397671   0.392990157397671      17    17
-4                   0   0.321745670185552       0     5
-5   0.420944899372523   0.420944899372523      13    13
-6                   0   0.237934598072985       0    11
-7                   0  0.0952867306569966       0     8
-8                   0   0.418092972524254       0     9
-9                   0   0.289121378714739       0    12</code></pre>
+0   0.328203206619366   0.328203206619366      15    15
+1   0.492162218351691   0.492162218351691      10    10
+2   0.420922621417808   0.420922621417808       7     7
+3   0.392198106242828   0.392198106242828      11    11
+4                   0   0.321264753878853       0    10
+5   0.420263727478807   0.420263727478807      11    11
+6                   0   0.238191463905309       0     9
+7                   0  0.0960134307167561       0    13
+8                   0   0.418489289780749       0     9
+9                   0   0.289234230606411       0     5</code></pre>
 </div>
 </div>
 </section>
 <section id="b.-pca-model" class="level4">
 <h4 class="anchored" data-anchor-id="b.-pca-model">3.b. PCA model</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#PCA model</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#for this method we will perform the PCA dimensionality reduction on the testing and training data, excluding the labels</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>train_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(hw_train[<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>], <span class="at">center=</span><span class="cn">FALSE</span>)</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>test_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(hw_test[<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>], <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#PCA model</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co">#for this method we will perform the PCA dimensionality reduction on the testing and training data, excluding the labels</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>train_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(hw_train[<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>], <span class="at">center=</span><span class="cn">FALSE</span>)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>test_pca<span class="ot">&lt;-</span><span class="fu">prcomp</span>(hw_test[<span class="dv">2</span><span class="sc">:</span><span class="dv">785</span>], <span class="at">center=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#once reduced to principal components, the labels are added back in</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>train_pca_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">as.numeric</span>(hw_train<span class="sc">$</span>label),<span class="fu">cbind</span>(train_pca<span class="sc">$</span>x))</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(train_pca_df)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"label"</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>test_pca_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">as.numeric</span>(hw_test<span class="sc">$</span>label),<span class="fu">cbind</span>(test_pca<span class="sc">$</span>x))</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(test_pca_df)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"label"</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co">#the model includes up to PC10</span></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>pca_model<span class="ot">&lt;-</span><span class="fu">lda</span>(label<span class="sc">~</span>PC1<span class="sc">+</span>PC2<span class="sc">+</span>PC3<span class="sc">+</span>PC4<span class="sc">+</span>PC5<span class="sc">+</span>PC6<span class="sc">+</span>PC7<span class="sc">+</span>PC8<span class="sc">+</span>PC9<span class="sc">+</span>PC10, <span class="at">data=</span>train_pca_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#once reduced to principal components, the labels are added back in</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>train_pca_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">as.numeric</span>(hw_train<span class="sc">$</span>label),<span class="fu">cbind</span>(train_pca<span class="sc">$</span>x))</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(train_pca_df)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"label"</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>test_pca_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">as.numeric</span>(hw_test<span class="sc">$</span>label),<span class="fu">cbind</span>(test_pca<span class="sc">$</span>x))</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(test_pca_df)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"label"</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co">#the model includes up to PC10</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>pca_model<span class="ot">&lt;-</span><span class="fu">lda</span>(label<span class="sc">~</span>PC1<span class="sc">+</span>PC2<span class="sc">+</span>PC3<span class="sc">+</span>PC4<span class="sc">+</span>PC5<span class="sc">+</span>PC6<span class="sc">+</span>PC7<span class="sc">+</span>PC8<span class="sc">+</span>PC9<span class="sc">+</span>PC10, <span class="at">data=</span>train_pca_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use the model to predict the values in the test set</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>hw_pca_predict<span class="ot">&lt;-</span><span class="fu">predict</span>(pca_model, <span class="at">newdata=</span>test_pca_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use the model to predict the values in the test set</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>hw_pca_predict<span class="ot">&lt;-</span><span class="fu">predict</span>(pca_model, <span class="at">newdata=</span>test_pca_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#compare the counts of each number predicted</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hw_pca_predict<span class="sc">$</span>class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#compare the counts of each number predicted</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hw_pca_predict<span class="sc">$</span>class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   0    1    2    3    4    5    6    7    8    9 
-1003  693 1364 1430 1649 2249 1097 1008 1219  888 </code></pre>
+ 915  731 1420 1151 1254 2314 1388 1004 1174 1249 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hw_test<span class="sc">$</span>label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hw_test<span class="sc">$</span>label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    0    1    2    3    4    5    6    7    8    9 
-1243 1428 1261 1330 1167 1142 1256 1314 1237 1222 </code></pre>
+1232 1402 1270 1291 1229 1203 1173 1277 1244 1279 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#count how many the model got right</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>comp<span class="ot">&lt;-</span>hw_pca_predict<span class="sc">$</span>class<span class="sc">==</span>hw_test<span class="sc">$</span>label</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(comp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#count how many the model got right</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>comp<span class="ot">&lt;-</span>hw_pca_predict<span class="sc">$</span>class<span class="sc">==</span>hw_test<span class="sc">$</span>label</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(comp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>comp
 FALSE  TRUE 
-11505  1095 </code></pre>
+10597  2003 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model by performance metrics</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mltest)</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>model_eval <span class="ot">&lt;-</span> <span class="fu">ml_test</span>(hw_pca_predict<span class="sc">$</span>class, hw_test<span class="sc">$</span>label)</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>model_eval<span class="sc">$</span>balanced.accuracy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model by performance metrics</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mltest)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>model_eval <span class="ot">&lt;-</span> <span class="fu">ml_test</span>(hw_pca_predict<span class="sc">$</span>class, hw_test<span class="sc">$</span>label, <span class="at">output.as.table =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>model_eval</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        0         1         2         3         4         5         6         7 
-0.2613755 0.3062081 0.2717016 0.2259087 0.3368947 0.2491913 0.2684719 0.2685440 
-        8         9 
-0.2655990 0.3667778 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>model_eval<span class="sc">$</span>precision</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          0           1           2           3           4           5 
-0.000997009 0.000000000 0.096774194 0.018181818 0.220133414 0.100489106 
-          6           7           8           9 
-0.042844120 0.020833333 0.060705496 0.230855856 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>model_eval<span class="sc">$</span>recall</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           0            1            2            3            4            5 
-0.0008045052 0.0000000000 0.1046788263 0.0195488722 0.3110539846 0.1978984238 
-           6            7            8            9 
-0.0374203822 0.0159817352 0.0598221504 0.1677577741 </code></pre>
+<pre><code>  balanced.accuracy         DOR        F0.5           F1           F2       FDR
+0         0.3436843 0.001779344 0.001022077 0.0009315324 0.0008557248 0.9989071
+1         0.3676388 0.005891178 0.003467406 0.0028129395 0.0023663038 0.9958960
+2         0.4946206 0.955225617 0.339568345 0.3509293680 0.3630769231 0.6676056
+3         0.3244222 0.021969077 0.013570823 0.0131040131 0.0126682502 0.9860990
+4         0.3774986 0.246450632 0.125700560 0.1264599275 0.1272285251 0.8748006
+5         0.4191051 0.518782627 0.220862415 0.2627239124 0.3241650295 0.8003457
+6         0.5149810 1.134390173 0.352416357 0.3701679032 0.3898026316 0.6585014
+7         0.3717679 0.150787771 0.081239373 0.0754055239 0.0703534031 0.9143426
+8         0.3334419 0.059018385 0.034511785 0.0339123242 0.0333333333 0.9650767
+9         0.4343600 0.526349598 0.231872510 0.2302215190 0.2285938727 0.7670136
+        FNR       FOR       FPR geometric.mean      Jaccard           L
+0 0.9991883 0.3807609 0.3134431     0.02360657 0.0004659832 0.002589588
+1 0.9978602 0.4115916 0.2668622     0.03960768 0.0014084507 0.008018372
+2 0.6283465 0.3426363 0.3824123     0.47909151 0.2128043282 0.971866175
+3 0.9876065 0.3908645 0.3635490     0.08881358 0.0065952185 0.034090296
+4 0.8722539 0.3673749 0.3727489     0.28307049 0.0674978504 0.342713651
+5 0.6159601 0.3247152 0.5458296     0.41763565 0.1512274959 0.703589299
+6 0.5959079 0.3137343 0.3741302     0.50290062 0.2271202683 1.080084170
+7 0.9326547 0.3832046 0.3238095     0.21339700 0.0391799544 0.207978258
+8 0.9670418 0.3800948 0.3660743     0.14454428 0.0172486327 0.090031445
+9 0.7724785 0.3659259 0.3588015     0.38195084 0.1300849352 0.634115249
+     lambda         MCC          MK       NPV          OP   precision
+0 1.4553612 -0.34452305 -0.37966801 0.6192391 -0.83867002 0.001092896
+1 1.3610813 -0.32843737 -0.40748768 0.5884084 -0.83521136 0.004103967
+2 1.0174206 -0.01049716 -0.01024196 0.6573637 -0.08964065 0.332394366
+3 1.5517401 -0.36383077 -0.37696354 0.6091355 -0.80283001 0.013900956
+4 1.3905976 -0.24358505 -0.24217555 0.6326251 -0.50263015 0.125199362
+5 1.3562314 -0.14224475 -0.12506088 0.6752848  0.07530136 0.199654278
+6 0.9521276  0.02884216  0.02776427 0.6862657 -0.05635792 0.341498559
+7 1.3792780 -0.27624304 -0.29754726 0.6167954 -0.65988286 0.085657371
+8 1.5254813 -0.33909021 -0.34517145 0.6199052 -0.74218935 0.034923339
+9 1.2047416 -0.13210716 -0.13293954 0.6340741 -0.31722315 0.232986389
+        recall specificity      Youden
+0 0.0008116883   0.6865569 -0.31263138
+1 0.0021398003   0.7331378 -0.26472237
+2 0.3716535433   0.6175877 -0.01075872
+3 0.0123934934   0.6364510 -0.35115551
+4 0.1277461351   0.6272511 -0.24500276
+5 0.3840399002   0.4541704 -0.16178975
+6 0.4040920716   0.6258698  0.02996190
+7 0.0673453406   0.6761905 -0.25646418
+8 0.0329581994   0.6339257 -0.33311611
+9 0.2275215012   0.6411985 -0.13128000</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -690,37 +741,37 @@ Attaching package: 'randomForest'</code></pre>
 <span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">as.matrix</span>(comp),<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Predicted Actual Accuracy
-11 "8"       "8"    "TRUE"  
-17 "2"       "2"    "TRUE"  
-18 "0"       "0"    "TRUE"  
-23 "2"       "2"    "TRUE"  
-24 "0"       "0"    "TRUE"  
-28 "9"       "9"    "TRUE"  
-29 "9"       "9"    "TRUE"  
-32 "9"       "9"    "TRUE"  
-40 "4"       "4"    "TRUE"  
-44 "7"       "4"    "FALSE" 
-57 "2"       "2"    "TRUE"  
-58 "3"       "3"    "TRUE"  
-61 "2"       "1"    "FALSE" 
-62 "1"       "1"    "TRUE"  
+2  "0"       "0"    "TRUE"  
+3  "1"       "1"    "TRUE"  
+10 "3"       "3"    "TRUE"  
+13 "1"       "1"    "TRUE"  
+14 "3"       "3"    "TRUE"  
+19 "7"       "7"    "TRUE"  
+33 "4"       "4"    "TRUE"  
+35 "2"       "2"    "TRUE"  
+38 "1"       "1"    "TRUE"  
+39 "1"       "1"    "TRUE"  
+44 "9"       "4"    "FALSE" 
+46 "6"       "6"    "TRUE"  
+47 "3"       "3"    "TRUE"  
+50 "4"       "4"    "TRUE"  
+52 "5"       "5"    "TRUE"  
+56 "2"       "2"    "TRUE"  
+59 "9"       "9"    "TRUE"  
+60 "1"       "1"    "TRUE"  
 64 "0"       "0"    "TRUE"  
-66 "3"       "3"    "TRUE"  
-67 "4"       "4"    "TRUE"  
-69 "1"       "1"    "TRUE"  
-73 "6"       "6"    "TRUE"  
-74 "2"       "2"    "TRUE"  </code></pre>
+70 "0"       "0"    "TRUE"  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>rf_comp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 FALSE  TRUE 
-  587 12013 </code></pre>
+  596 12004 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Random Forest accuracy:"</span>,rf_accuracy[[<span class="dv">1</span>]],<span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Random Forest accuracy: 95.34127 %</code></pre>
+Random Forest accuracy: 95.26984 %</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -738,13 +789,13 @@ Random Forest accuracy: 95.34127 %</code></pre>
 <span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="fu">as.matrix</span>(comp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Predicted Accuracy
-0 "5"       "FALSE" 
-1 "8"       "FALSE" 
-2 "3"       "FALSE" 
+0 "0"       "TRUE"  
+1 "5"       "FALSE" 
+2 "6"       "FALSE" 
 3 "5"       "FALSE" 
-4 "5"       "FALSE" 
+4 "8"       "FALSE" 
 5 "5"       "TRUE"  
-6 "6"       "TRUE"  
+6 "8"       "FALSE" 
 7 "5"       "FALSE" 
 8 "5"       "FALSE" 
 9 "5"       "FALSE" </code></pre>
@@ -785,7 +836,7 @@ Random Forest accuracy: 20 %</code></pre>
 <pre><code>  Predicted Accuracy
 0 "0"       "TRUE"  
 1 "8"       "FALSE" 
-2 "8"       "FALSE" 
+2 "2"       "TRUE"  
 3 "8"       "FALSE" 
 4 "8"       "FALSE" 
 5 "8"       "FALSE" 
@@ -798,12 +849,12 @@ Random Forest accuracy: 20 %</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 FALSE  TRUE 
-    7     3 </code></pre>
+    6     4 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Random Forest accuracy:"</span>,rf_accuracy3[<span class="dv">1</span>],<span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Random Forest accuracy: 30 %</code></pre>
+Random Forest accuracy: 40 %</code></pre>
 </div>
 </div>
 </section>
@@ -853,7 +904,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -889,24 +957,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
