@@ -6,13 +6,13 @@
 
 #Please consider 'Final written portion.docx' the final submission of our responses to the questions asked in the Final Prompt.
 
-#Please consider "bt1194_FinalProject_Dataset1_NBA.rmd", "dm5153 Final Project - Dataset 2.qmd", and "Dataset#3.qmd" as our code for each portion of the final, respectively
+#Please consider "bt1194_FinalProject_Dataset1_NBA.rmd", "dm5153 Final Project - Dataset 2.qmd", and "Dataset#3.qmd" as our code for each portion of the final, respectively.
 
-#Rendered HTMLs of the previously mentioned rmd/qmd files can also be found using the same naming conventions
+#Rendered HTMLs of the previously mentioned rmd/qmd files can also be found using the same naming conventions.
 
 #Images generated from each rmd/qmd file have also been included, using sensible names. 
 
-#Dataset 1 was worked on by Brandon and Jessica, Dataset 2 was worked onby Devin, and Dataset 3 was worked on by Mudra.
+#Dataset 1 was worked on by Brandon and Jessica, Dataset 2 was worked on by Devin, and Dataset 3 was worked on by Mudra.
 
 
 
