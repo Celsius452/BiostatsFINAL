@@ -1,7 +1,5 @@
 #Members of this group include: Devin McAvoy, Brandon Thong, Jessica Schilter, and Mudra Patel
 
-#All files for this Biostats Final can be found in this GitHub repository
-
 #In this repository you will find a master word document named "Final written portion.docx" that will include our written responses and generated images to answer the prompt. 
 
 #Furthermore, you may find raw rmd/qmd files containing the code for each section of the final. These files will contain "Dataset 1/2/3" in their names. Images generated from each of these R documents can also be found with sensible related names. 
